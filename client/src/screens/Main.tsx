@@ -8,6 +8,7 @@ import { Box, HLine, Pic, Svg, Txt, VLine } from '../ui/prim';
 import { Clock, Header } from '../ui/chrome';
 import { Scramble } from '../fx/Scramble';
 import Popup from './Popup';
+import { AxisPulses, EmblemGlare, OrbitDots, Radar, Scanners } from './MainFx';
 
 // Figma "메인 화면" (3:764)
 const CAMS = [
@@ -64,11 +65,12 @@ export default function Main() {
   return (
     <>
       <Pic src={asset('main/waveform.webp')} x={1455} y={838} w={396} h={145} crop={{ w: 100, h: 163.94, l: 0, t: -31.72 }} className="wave" />
-      <HLine x={-21} y={540} len={2398} />
-      <VLine x={1145} y={-41} len={1138} />
+      <HLine x={-21} y={540} len={2398} className="draw-x" />
+      <VLine x={1145} y={-41} len={1138} className="draw-y" />
       <Header percent="100%" logoLink={false} />
       <Txt x={1653} y={997} w={227} size={18} lh={1.5} underline onClick={() => setPopup(true)}>상부 교신 다시보기</Txt>
 
+      <Radar />
       {/* Figma comment: "계속해서 돌아가는 원/점" — circle + its four nodes orbit around (1145.5, 540.5) */}
       <div className="orbit" aria-hidden>
         <Svg src={asset('main/circle-477.svg')} x={907} y={302} w={477} h={477} />
@@ -79,10 +81,13 @@ export default function Main() {
       </div>
       <Svg src={asset('main/circle-1242.svg')} x={-48} y={-81} w={1242} h={1242} />
       <Svg src={asset('main/ellipse-dashed.svg')} x={937.5} y={330.5} w={415} h={420} className="spin-rev" />
+      <OrbitDots />
+      <AxisPulses />
 
       {CAMS.map((c, i) => (
         <Pic key={i} src={asset(`main/cctv${i + 1}.webp`)} x={60} y={c.y} w={435} h={c.h} crop={c.crop} border={0.5}
-          to={`/targets/${i + 1}`} label={`CAM ${i + 1} — TARGET 0${i + 1}`} className="cctv" />
+          to={`/targets/${i + 1}`} label={`CAM ${i + 1} — TARGET 0${i + 1}`} className="cctv"
+          style={{ ['--d' as string]: `${0.35 + i * 0.22}s`, ['--g' as string]: `${6 + i * 1.7}s` }} />
       ))}
       {CAMS.map((c, i) => (
         <Svg key={i} src={asset('common/dot-gray.svg')} x={455} y={c.dotY} w={7} h={7} rotate={180} className="blink" />
@@ -90,45 +95,49 @@ export default function Main() {
       {CAMS.map((c, i) => (
         <Txt key={i} x={469} y={c.labelY} w={26} h={i === 2 ? 19 : 18} size={13} lh={1.5}>REC</Txt>
       ))}
-      <Txt x={60} y={143} w={193} h={18} size={13} lh={1.5}>CAM 0127 / 13TH FLOOR OFFICE</Txt>
-      <Txt x={541} y={219} w={193} h={66} size={13}>{'TOTAL CAMERAS\n04 / 04 ONLINE'}</Txt>
+      <Txt x={60} y={143} w={193} h={18} size={13} lh={1.5}><Scramble text="CAM 0127 / 13TH FLOOR OFFICE" delay={350} /></Txt>
+      <Txt x={541} y={219} w={193} h={66} size={13}><Scramble text={'TOTAL CAMERAS\n04 / 04 ONLINE'} delay={500} /></Txt>
       <Txt x={541} y={900} w={193} h={126} size={13} color="var(--gray)">
-        {'BUILDING OVERVIEW\n\n01 13TH FLOOR OFFICE\n01 13TH FLOOR OFFICE\n01 13TH FLOOR OFFICE\n01 13TH FLOOR OFFICE'}
+        <Scramble text={'BUILDING OVERVIEW\n\n01 13TH FLOOR OFFICE\n01 13TH FLOOR OFFICE\n01 13TH FLOOR OFFICE\n01 13TH FLOOR OFFICE'} delay={900} duration={1100} />
       </Txt>
       <Txt x={541} y={143} w={308} h={66} size={13} color="var(--gray)">{'CENTRAL MONITORING SYSTEM\nVER 1.0.0'}</Txt>
       <CodeName onLogged={refreshLog} />
       <Clock />
       {CAMS.slice(1).map((c, i) => (
-        <Txt key={i} x={60} y={c.labelY} w={193} h={i === 1 ? 19 : 18} size={13} lh={1.5}>CAM 0127 / 13TH FLOOR OFFICE</Txt>
+        <Txt key={i} x={60} y={c.labelY} w={193} h={i === 1 ? 19 : 18} size={13} lh={1.5}><Scramble text="CAM 0127 / 13TH FLOOR OFFICE" delay={570 + i * 220} /></Txt>
       ))}
       {CAMS.map((c, i) => <CamStamp key={i} y={c.stampY} offset={i * 7_000} />)}
 
-      <Box x={1547} y={219} w={313} h={406} bg="#000" border={0.5} />
-      <Box x={541} y={285} w={366} h={584} bg="#000" border={0.5} />
-      <Pic src={asset('main/building.webp')} x={553} y={297} w={220} h={561} crop={{ w: 152.95, h: 100, l: -25.82, t: 0 }} />
+      <Box x={1547} y={219} w={313} h={406} bg="#000" border={0.5} className="draw-box" />
+      <Box x={541} y={285} w={366} h={584} bg="#000" border={0.5} className="draw-box" />
+      <Pic src={asset('main/building.webp')} x={553} y={297} w={220} h={561} crop={{ w: 152.95, h: 100, l: -25.82, t: 0 }} className="boot-fade" />
+      <Scanners />
       <Box x={666} y={366} w={39} h={39} border={0.5} className="target-box" />
       <Box x={584} y={487} w={39} h={39} border={0.5} className="target-box d1" />
       <Box x={698} y={630} w={39} h={39} border={0.5} className="target-box d2" />
       <Box x={601} y={781} w={39} h={39} border={0.5} className="target-box d3" />
       <Txt x={791} y={304} w={109} h={57} size={13}>{'\n13TH FLOOR\nOFFICE'}</Txt>
-      <Txt x={1425} y={652} w={435} h={145} size={13} color="var(--gray)">{`ACTIVITY LOG\n...\n${log.join('\n')}`}</Txt>
+      <Txt x={1425} y={652} w={435} h={145} size={13} color="var(--gray)">{`ACTIVITY LOG\n...\n${log.join('\n')}`}<span className="caret">_</span></Txt>
       <Txt x={927} y={1002} w={435} size={13} align="center"><Scramble text="BRACE YOURSELF, AGENT." delay={400} /></Txt>
       <Txt x={791} y={413} w={109} h={57} size={13}>{'\n9TH FLOOR\nOFFICE'}</Txt>
       <Txt x={791} y={522} w={109} h={57} size={13}>{'\nIN-HOUSE\nHOSPITAL'}</Txt>
       <Txt x={791} y={631} w={109} h={57} size={13}>{'\nCONTROL\nROOM'}</Txt>
       <HLine x={705} y={386} len={171} center />
-      <Box x={873} y={384} w={4} h={4} bg="#fff" />
+      <Box x={873} y={384} w={4} h={4} bg="#fff" className="pulse-sq" />
       <Svg src={asset('main/leader-1.svg')} x={625} y={495.75} w={248} h={12.4956} />
       <Svg src={asset('main/leader-2.svg')} x={736.8} y={604.75} w={136.2} h={46.4} />
       <Svg src={asset('main/leader-3.svg')} x={640} y={717.75} w={233} h={82.39} />
-      <Box x={873} y={494} w={4} h={4} bg="#fff" />
-      <Box x={873} y={603} w={4} h={4} bg="#fff" />
-      <Box x={873} y={716} w={4} h={4} bg="#fff" />
+      <Box x={873} y={494} w={4} h={4} bg="#fff" className="pulse-sq" />
+      <Box x={873} y={603} w={4} h={4} bg="#fff" className="pulse-sq" />
+      <Box x={873} y={716} w={4} h={4} bg="#fff" className="pulse-sq" />
       <Svg src={asset('main/circle-1242.svg')} x={1095} y={-81} w={1242} h={1242} />
-      <Pic src={asset('main/emblem.webp')} x={938} y={374} w={421} h={329} className="emblem-float" />
-      <Svg src={asset('common/crosshair.svg')} x={884} y={223} w={23} h={31} />
-      <Svg src={asset('common/crosshair.svg')} x={884} y={900} w={23} h={31} />
-      <Pic src={asset('main/face.webp')} x={1558} y={225} w={293} h={371} crop={{ w: 100.09, h: 105.39, l: -0.04, t: -2.43 }} className="face-scan" />
+      <div className="emblem-wrap">
+        <Pic src={asset('main/emblem.webp')} x={938} y={374} w={421} h={329} className="emblem-in" />
+        <EmblemGlare />
+      </div>
+      <Svg src={asset('common/crosshair.svg')} x={884} y={223} w={23} h={31} className="xhair" />
+      <Svg src={asset('common/crosshair.svg')} x={884} y={900} w={23} h={31} className="xhair late" />
+      <Pic src={asset('main/face.webp')} x={1558} y={225} w={293} h={371} crop={{ w: 100.09, h: 105.39, l: -0.04, t: -2.43 }} className="face-scan boot-fade late" />
       <Txt x={1589} y={585} w={231} size={13} align="center"><Scramble text="VERIFY YOUR IDENTITY." delay={800} /></Txt>
 
       {popup && <Popup onClose={closePopup} />}
