@@ -1,0 +1,46 @@
+// Click-through smoke test of the main flows (server must be running on :3000).
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const { chromium } = require('playwright');
+const BASE = process.env.QA_BASE || 'http://localhost:3000';
+
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+const errors = [];
+page.on('pageerror', (e) => errors.push(String(e)));
+page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+const step = async (label, fn) => { await fn(); await page.waitForTimeout(650); console.log('✓', label, '→', new URL(page.url()).pathname); };
+const click = (text) => page.getByText(text, { exact: true }).first().click();
+
+await step('guard redirects to password', () => page.goto(`${BASE}/equipment`));
+await step('wrong code is rejected', async () => { await page.keyboard.type('1234'); await page.waitForTimeout(900); });
+const denied = await page.getByText('접근이 거부되었습니다', { exact: false }).count();
+await step('correct code opens main', async () => { await page.keyboard.type('0000'); await page.waitForURL('**/main'); });
+const popupOpen = await page.getByText('IN COMMUNICATION').count();
+await step('close popup with X', () => page.getByRole('button', { name: '닫기' }).click());
+await step('replay transmission', () => click('상부 교신 다시보기'));
+await step('close popup with Esc', () => page.keyboard.press('Escape'));
+await step('log a code name', async () => { await page.locator('.codename-input').fill('TESTER'); await page.keyboard.press('Enter'); });
+const logged = await page.getByText('TESTER', { exact: false }).count();
+await step('CCTV 1 → target 1', () => page.getByRole('link', { name: /CAM 1/ }).click());
+await step('target → report', () => click('타겟 상세 관찰 보고서 확인'));
+await step('report next shot', () => page.getByRole('button', { name: '다음 화면' }).click());
+const shot = await page.getByText('02 / 03').count();
+await step('report → equipment op', () => click('작전 장비 확인하기'));
+await step('equipment next item', () => page.getByRole('button', { name: '다음 장비' }).click());
+const item2 = await page.getByText('02 / 02').count();
+await step('back to equipment list', () => click('장비 목록으로 돌아가기'));
+await step('hover card', () => page.getByRole('link', { name: /OP.FLOW/ }).hover());
+await step('open stretch op', () => page.getByRole('link', { name: /OP. STRETCH/ }).click());
+await step('select 3rd item thumbnail', () => page.getByRole('button', { name: '03 / 손가락 스트레칭 기구' }).first().click());
+await step('nav → culture', () => click('조직 문화'));
+await step('culture next via redaction bar', () => page.getByRole('button', { name: '다음 페이지' }).click());
+await step('culture previous', () => click('PREVIOUS PAGE'));
+await step('nav → org', () => click('조직도'));
+await step('org → Ethan', () => page.getByRole('link', { name: /Ethan Vence/ }).click());
+await step('Ethan → org', () => click('조직도로 돌아가기'));
+await step('logo → main', () => page.getByRole('link', { name: /BRACER/ }).click());
+const pct = await page.locator('text=/^\\d+%$/').first().textContent();
+await page.screenshot({ path: 'qa/smoke-main.png' });
+await browser.close();
+console.log({ denied, popupOpen, logged, shot, item2, progress: pct, errors });

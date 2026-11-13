@@ -1,0 +1,72 @@
+@import '@fontsource/gothic-a1/400.css';
+@import '@fontsource/gothic-a1/600.css';
+
+:root {
+  --white: #ffffff;
+  --paper: #fdfcfb;
+  --gray: #606060;
+  --black: #000000;
+  --font: 'Gothic A1', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; height: 100%; }
+body {
+  background: #000;
+  color: #fff;
+  font-family: var(--font);
+  font-weight: 600;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  overflow: hidden;
+}
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: none; }
+
+/* ---------- stage: fixed 1920×1080 artboard, scaled to the viewport ---------- */
+.viewport { position: fixed; inset: 0; overflow: hidden; background: var(--stage-bg, #000); transition: background-color .4s; }
+.stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; overflow: hidden; }
+
+/* ---------- primitives ---------- */
+.abs { position: absolute; }
+.txt {
+  position: absolute;
+  margin: 0;
+  font-family: var(--font);
+  font-style: normal;
+  letter-spacing: -0.02em;            /* Figma: -2% */
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+.txt.nowrap { white-space: pre; }
+.u {
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: from-font;
+  text-underline-position: from-font;
+}
+.pic { position: absolute; overflow: hidden; }
+.pic > img { position: absolute; pointer-events: none; user-select: none; -webkit-user-drag: none; }
+.pic.fit > img { inset: 0; width: 100%; height: 100%; }
+.pic.stroked::after { content: ''; position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 0 var(--sw) var(--sc); }
+.svg { position: absolute; pointer-events: none; }
+.svg > img { position: absolute; display: block; width: 100%; height: 100%; }
+
+/* ---------- interaction ---------- */
+.hit { cursor: pointer; }
+a.txt, button.txt { cursor: pointer; }
+a.txt:hover, button.txt:hover { animation: flicker .35s steps(2) 1; }
+a.txt:focus-visible, button.txt:focus-visible, .hit:focus-visible { outline: 1px dashed currentColor; outline-offset: 4px; }
+
+@keyframes flicker {
+  0% { opacity: 1; } 25% { opacity: .2; } 50% { opacity: 1; } 75% { opacity: .5; } 100% { opacity: 1; }
+}
+@keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.blink { animation: blink 1.2s steps(1) infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}

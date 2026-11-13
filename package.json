@@ -1,0 +1,19 @@
+{
+  "name": "bracer",
+  "private": true,
+  "version": "1.0.0",
+  "description": "BRACER — Central Monitoring System (Figma 시안 구현: React + Node.js)",
+  "scripts": {
+    "setup": "npm install && npm --prefix server install && npm --prefix client install",
+    "dev": "concurrently -k -n server,client -c gray,cyan \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix server start",
+    "assets": "bash scripts/download-assets.sh && python3 scripts/build-assets.py",
+    "qa": "node scripts/qa-compare.mjs"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0"
+  }
+}

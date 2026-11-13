@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.figma-raw/
+qa/
+server/data/activity.json
+*.log
+.DS_Store

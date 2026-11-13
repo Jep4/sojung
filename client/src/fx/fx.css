@@ -1,0 +1,114 @@
+/* ===== SF control-panel effects (transient; the settled state equals the Figma frame) ===== */
+.screen { position: absolute; inset: 0; }
+
+/* screen change: sliced glitch reveal */
+.screen-in { animation: screen-in .55s steps(1, end) both; }
+@keyframes screen-in {
+  0%   { clip-path: inset(0 0 100% 0); filter: brightness(2.2) contrast(1.4); transform: translateX(0); }
+  12%  { clip-path: inset(0 0 72% 0); transform: translateX(-14px); }
+  24%  { clip-path: inset(18% 0 46% 0); transform: translateX(10px); filter: brightness(1.6) hue-rotate(40deg); }
+  36%  { clip-path: inset(0 0 30% 0); transform: translateX(-6px); }
+  48%  { clip-path: inset(40% 0 0 0); transform: translateX(4px); }
+  60%  { clip-path: inset(0 0 8% 0); transform: translateX(-2px); filter: brightness(1.2); }
+  72%  { clip-path: inset(0); transform: translateX(1px); }
+  100% { clip-path: inset(0); transform: none; filter: none; }
+}
+/* horizontal scan sweep after every navigation */
+.sweep {
+  position: absolute; left: 0; right: 0; top: 0; height: 140px; pointer-events: none; z-index: 50;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.10) 60%, rgba(255,255,255,.55) 98%, rgba(255,255,255,0));
+  mix-blend-mode: difference; animation: sweep .7s cubic-bezier(.3,.6,.4,1) both;
+}
+@keyframes sweep { from { transform: translateY(-160px); opacity: 1; } to { transform: translateY(1100px); opacity: .2; } }
+/* persistent but very faint CRT lines */
+.scanlines {
+  position: absolute; inset: 0; pointer-events: none; z-index: 60; opacity: .05;
+  background: repeating-linear-gradient(to bottom, #000 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
+}
+
+/* ===== password ===== */
+.sr-input { position: absolute; left: 680px; top: 807px; width: 561px; height: 106px; opacity: 0; border: 0; padding: 0; font-size: 16px; z-index: -1; }
+.pw-slot { display: flex; align-items: center; justify-content: center; transition: border-color .2s, background-color .2s; }
+.pw-slot.current::after { content: ''; width: 2px; height: 46px; background: #fff; animation: blink 1s steps(1) infinite; }
+.pw-digit { font-size: 56px; line-height: 1; letter-spacing: 0; animation: digit-in .25s steps(3) both; }
+@keyframes digit-in { 0% { opacity: 0; transform: translateY(-6px); } 100% { opacity: 1; transform: none; } }
+.pw-slots.denied .pw-slot { border-color: #ff2a2a !important; animation: shake .45s; }
+.pw-slots.granted .pw-slot { background: #fff !important; color: #000; transition: background-color .15s steps(2); }
+.pw-slots.checking .pw-slot { animation: flicker .5s steps(2) infinite; }
+.pw-emblem.granted { animation: flicker .3s steps(2) 3; }
+.shake { animation: shake .45s; }
+@keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-10px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(4px); } }
+
+/* ===== popup ===== */
+.popup-layer { position: absolute; inset: 0; z-index: 40; }
+.popup-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.72); animation: fade-in .3s both; }
+.popup { animation: popup-in .6s steps(6, end) both; }
+@keyframes popup-in {
+  0% { clip-path: inset(49% 0 49% 0); filter: brightness(3); } 40% { clip-path: inset(49% 0 49% 0); }
+  70% { clip-path: inset(0 0 0 0); filter: brightness(1.8); } 100% { clip-path: inset(0); filter: none; }
+}
+.static-noise > img { animation: noise .25s steps(4) infinite; }
+@keyframes noise {
+  0% { transform: translate(0, 0); } 25% { transform: translate(-14px, 9px); } 50% { transform: translate(9px, -12px); }
+  75% { transform: translate(-6px, -4px); } 100% { transform: translate(0, 0); }
+}
+.caret { margin-left: 2px; animation: blink .8s steps(1) infinite; }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* ===== main ===== */
+.spin-slow { animation: spin 60s linear infinite; }
+.spin-rev { animation: spin 90s linear infinite reverse; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.emblem-float > img { animation: float 6s ease-in-out infinite; }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.cctv > img { transition: filter .2s; }
+.cctv:hover > img { filter: brightness(1.35) contrast(1.15); animation: jitter .3s steps(3) 1; }
+.cctv:hover { outline: 1px solid #fff; outline-offset: 3px; }
+@keyframes jitter { 0% { transform: translateX(0); } 33% { transform: translateX(-4px); } 66% { transform: translateX(3px); } 100% { transform: none; } }
+.target-box { animation: lock 3.2s steps(1) infinite; }
+.target-box.d1 { animation-delay: .8s; } .target-box.d2 { animation-delay: 1.6s; } .target-box.d3 { animation-delay: 2.4s; }
+@keyframes lock { 0%, 88% { border-color: var(--paper); } 90%, 96% { border-color: transparent; } }
+.face-scan::after { content: ''; position: absolute; left: 0; right: 0; height: 2px; top: 0; background: rgba(255,255,255,.7); box-shadow: 0 0 12px #fff; animation: scan 3.5s linear infinite; }
+@keyframes scan { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(371px); opacity: 0; } }
+.wave > img { animation: wave 1.8s steps(6) infinite; }
+@keyframes wave { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(.82); } }
+.codename-input { position: absolute; background: transparent; border: 0; outline: none; color: transparent; caret-color: #fff; font: 600 13px/1.6 var(--font); letter-spacing: -0.02em; padding: 0; }
+
+/* ===== culture ===== */
+.redact { transform-origin: right center; transition: transform .35s steps(5); }
+.redact.open, .redact:hover { transform: scaleX(0); }
+.culture-link:hover { animation: flicker .35s steps(2) 1; }
+.scan::after { content: ''; position: absolute; top: 0; bottom: 0; width: 2px; left: 0; background: rgba(255,255,255,.6); box-shadow: 0 0 14px #fff; animation: scan-x 5s linear infinite; }
+@keyframes scan-x { from { transform: translateX(0); } to { transform: translateX(788px); } }
+
+/* ===== equipment ===== */
+.equip-card .equip-img.hover { opacity: 0; }
+.equip-card:hover .equip-img.hover, .equip-card:focus-visible .equip-img.hover { animation: swap-in .45s steps(5) forwards; }
+@keyframes swap-in {
+  0% { opacity: 0; clip-path: inset(0 0 100% 0); } 20% { opacity: 1; clip-path: inset(0 0 70% 0); transform: translateX(-6px); }
+  40% { clip-path: inset(30% 0 30% 0); transform: translateX(5px); } 60% { clip-path: inset(0 0 20% 0); transform: none; }
+  100% { opacity: 1; clip-path: inset(0); }
+}
+.hero-in > img { animation: hero-in .6s steps(6) both; }
+@keyframes hero-in { 0% { opacity: 0; filter: brightness(3) blur(6px); } 50% { opacity: .7; } 100% { opacity: 1; filter: none; } }
+.thumb, .item-text { transition: left .35s steps(6), color .2s; }
+.thumb:not(.on):hover > img { opacity: .6 !important; }
+button.item-text:not(.on):hover { color: #a0a0a0 !important; }
+
+/* ===== dossiers ===== */
+.monitor-shot > img { animation: hero-in .45s steps(4) both; }
+.dossier-photo > img { animation: develop 1.2s steps(8) both; }
+@keyframes develop { 0% { opacity: 0; filter: grayscale(1) contrast(3) brightness(2); } 100% { opacity: 1; } }
+.restricted { animation: flicker 4s steps(1) infinite; }
+.redact-static:hover { animation: flicker .3s steps(2) 2; }
+.ethan-card:hover > img { filter: brightness(1.3); }
+
+.boot { animation: flicker 1s steps(2) infinite; }
+.offline { position: absolute; left: 0; top: 520px; width: 1920px; text-align: center; font-size: 13px; color: #ff4d4d; }
+
+/* ===== QA (?qa=1): freeze everything to the static Figma state ===== */
+html.qa *, html.qa *::before, html.qa *::after { animation: none !important; transition: none !important; }
+html.qa .sweep, html.qa .scanlines, html.qa .caret { display: none !important; }
+html.qa .equip-card .equip-img.hover { opacity: 0 !important; }
+html.qa.qa-hover .equip-card .equip-img.hover { opacity: 1 !important; }
