@@ -1,5 +1,6 @@
 import { asset, useContent } from '../lib/content';
 import { useVisit } from '../lib/session';
+import { useFocusOp } from '../lib/useFocusOp';
 import { Box, Pic, Txt } from '../ui/prim';
 import { Header, SysInfo } from '../ui/chrome';
 
@@ -14,6 +15,7 @@ const CARDS: Record<string, { x: number; w: number; h: number }> = {
 export default function Equipment() {
   const { equipment } = useContent();
   useVisit('equipment');
+  const focus = useFocusOp();
   return (
     <>
       <Header active="equipment" />
@@ -25,7 +27,7 @@ export default function Equipment() {
       {equipment.map((op) => {
         const c = CARDS[op.card];
         return (
-          <Box key={op.id} x={c.x} y={305} w={c.w} h={c.h} to={`/equipment/${op.id}`} label={`${op.code} 장비 보기`} className="equip-card">
+          <Box key={op.id} x={c.x} y={305} w={c.w} h={c.h} to={`/equipment/${op.id}`} label={`${op.code} 장비 보기`} className={`equip-card${focus === op.id ? ' focus' : ''}`}>
             <Pic src={asset(`equip/${op.card}.webp`)} x={0} y={0} w={c.w} h={c.h} border={1} borderColor="#fff" gray className="equip-img" />
             <Pic src={asset(`equip/${op.card}-hover.webp`)} x={0} y={0} w={c.w} h={c.h} border={1} borderColor="#fff" className="equip-img hover" />
           </Box>

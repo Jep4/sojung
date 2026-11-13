@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { asset, useContent } from '../lib/content';
 import { useVisit } from '../lib/session';
 import { Box, cropOf, HLine, Pic, Svg, Txt } from '../ui/prim';
@@ -11,6 +11,7 @@ export default function Report() {
   const { targets } = useContent();
   const t = targets.find((x) => String(x.id) === id);
   const [shot, setShot] = useState(0);
+  const navigate = useNavigate();
   useVisit(`report-${id}`);
   const n = t?.report.shots.length ?? 1;
   const go = (d: number) => setShot((s) => (s + d + n) % n);
@@ -41,7 +42,7 @@ export default function Report() {
       <HLine x={60} y={597} len={890} />
       <Txt x={1043} y={896} w={319} size={20} lh={1.7}>{r.monitor}</Txt>
       <Txt x={60} y={986} w={900} size={20} lh={1.7}>{r.note}</Txt>
-      <Txt x={601} y={988} w={227} size={20} lh={1.5} underline to={`/equipment/${t.op}`}>작전 장비 확인하기</Txt>
+      <Txt x={601} y={988} w={227} size={20} lh={1.5} underline onClick={() => navigate('/equipment', { state: { focus: t.op } })}>작전 장비 확인하기</Txt>
     </>
   );
 }

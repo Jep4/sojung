@@ -22,4 +22,5 @@ export type Content = {
   articles: string[];
   targets: Target[];
   ethan: { name: string; report: Run[] };
+  transmission: { video: string | null; subtitle: string };
 };

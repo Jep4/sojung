@@ -69,12 +69,16 @@ export default function Main() {
       <Header percent="100%" logoLink={false} />
       <Txt x={1653} y={997} w={227} size={18} lh={1.5} underline onClick={() => setPopup(true)}>상부 교신 다시보기</Txt>
 
-      <Svg src={asset('main/circle-477.svg')} x={907} y={302} w={477} h={477} className="spin-slow" />
+      {/* Figma comment: "계속해서 돌아가는 원/점" — circle + its four nodes orbit around (1145.5, 540.5) */}
+      <div className="orbit" aria-hidden>
+        <Svg src={asset('main/circle-477.svg')} x={907} y={302} w={477} h={477} />
+        <Svg src={asset('main/node-13x14.svg')} x={1376.5} y={533.5} w={14} h={13} rotate={-90} />
+        <Svg src={asset('main/node-14x13.svg')} x={1138} y={295} w={14} h={13} rotate={180} />
+        <Svg src={asset('main/node-14x13.svg')} x={1138} y={772} w={14} h={13} rotate={180} />
+        <Svg src={asset('main/node-13x14.svg')} x={899.5} y={533.5} w={14} h={13} rotate={-90} />
+      </div>
       <Svg src={asset('main/circle-1242.svg')} x={-48} y={-81} w={1242} h={1242} />
       <Svg src={asset('main/ellipse-dashed.svg')} x={937.5} y={330.5} w={415} h={420} className="spin-rev" />
-      <Svg src={asset('main/node-13x14.svg')} x={1376.5} y={533.5} w={14} h={13} rotate={-90} />
-      <Svg src={asset('main/node-14x13.svg')} x={1138} y={295} w={14} h={13} rotate={180} />
-      <Svg src={asset('main/node-14x13.svg')} x={1138} y={772} w={14} h={13} rotate={180} />
 
       {CAMS.map((c, i) => (
         <Pic key={i} src={asset(`main/cctv${i + 1}.webp`)} x={60} y={c.y} w={435} h={c.h} crop={c.crop} border={0.5}
@@ -120,7 +124,6 @@ export default function Main() {
       <Box x={873} y={494} w={4} h={4} bg="#fff" />
       <Box x={873} y={603} w={4} h={4} bg="#fff" />
       <Box x={873} y={716} w={4} h={4} bg="#fff" />
-      <Svg src={asset('main/node-13x14.svg')} x={899.5} y={533.5} w={14} h={13} rotate={-90} />
       <Svg src={asset('main/circle-1242.svg')} x={1095} y={-81} w={1242} h={1242} />
       <Pic src={asset('main/emblem.webp')} x={938} y={374} w={421} h={329} className="emblem-float" />
       <Svg src={asset('common/crosshair.svg')} x={884} y={223} w={23} h={31} />

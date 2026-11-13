@@ -112,3 +112,19 @@ html.qa *, html.qa *::before, html.qa *::after { animation: none !important; tra
 html.qa .sweep, html.qa .scanlines, html.qa .caret { display: none !important; }
 html.qa .equip-card .equip-img.hover { opacity: 0 !important; }
 html.qa.qa-hover .equip-card .equip-img.hover { opacity: 1 !important; }
+
+/* ===== Figma comment requests ===== */
+/* equipment detail: hero "두둥실" (translate composes with the Figma rotation transform) */
+.hero-float { animation: bob 5.5s ease-in-out infinite; }
+@keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -16px; } }
+/* main: rotating circle + nodes */
+.orbit { position: absolute; inset: 0; transform-origin: 1145.5px 540.5px; animation: spin 40s linear infinite; pointer-events: none; }
+/* report → list: reveal the matching card */
+.equip-card.focus .equip-img.hover { animation: swap-in .45s steps(5) .35s forwards; }
+/* org: restricted agents refuse clicks */
+.locked { cursor: not-allowed; }
+.locked.denied { animation: shake .45s; box-shadow: inset 0 0 0 1px #ff2a2a !important; background: rgba(255, 0, 0, .12) !important; }
+.restricted.denied { color: #ff2a2a !important; animation: shake .45s, flicker .3s steps(2) 2 !important; }
+.m-agent.locked.denied .m-agent-box { animation: shake .45s; box-shadow: inset 0 0 0 1px #ff2a2a; }
+.m-agent.locked.denied .restricted { color: #ff2a2a; }
+.m-popup-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }

@@ -40,7 +40,7 @@ export default function EquipmentDetail() {
   return (
     <>
       <Pic key={active.image} src={asset(`detail/${active.image}.webp`)} x={active.hero.x} y={active.hero.y} w={active.hero.w} h={active.hero.h}
-        rotate={active.hero.rotate} className="hero-in" />
+        rotate={active.hero.rotate} className="hero-in hero-float" />
       <HLine x={1486} y={941} len={278} />
       <SysInfo />
       <Txt x={60} y={305} w={663} size={40} lh={1.3}><Scramble text={op.title} duration={800} /></Txt>
