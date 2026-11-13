@@ -125,3 +125,45 @@ html.m.m-light body { background: #fff; }
 .m-agent-name i { display: inline-block; width: 92px; height: 18px; background: #fff; vertical-align: middle; }
 
 .sweep.fixed { position: fixed; height: 90px; }
+
+/* ===== mobile main: motion graphics (same vocabulary as the desktop artboard) ===== */
+html.m .m-root .m-sec { animation: m-sec-in .7s steps(6) both; }
+html.m .m-root .m-sec:nth-of-type(2) { animation-delay: .25s; }
+html.m .m-root .m-sec:nth-of-type(3) { animation-delay: .45s; }
+html.m .m-root .m-sec:nth-of-type(4) { animation-delay: .6s; }
+html.m .m-root .m-sec:nth-of-type(5) { animation-delay: .75s; }
+@keyframes m-sec-in { 0% { opacity: 0; clip-path: inset(0 0 100% 0); } 40% { opacity: 1; } 100% { opacity: 1; clip-path: inset(0); } }
+
+/* feeds power on, roll and glitch */
+.m-cam .m-feed > img { animation: cctv-boot .9s steps(6) var(--d, 0s) both, cctv-glitch var(--g, 7s) steps(1) calc(var(--d, 0s) + 1.2s) infinite; }
+.m-cam .m-feed::before { content: ''; position: absolute; left: 0; right: 0; top: -30%; height: 30%; z-index: 1; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,.07) 45%, rgba(255,255,255,.14) 50%, transparent);
+  animation: roll 4.2s linear var(--d, 0s) infinite; }
+.m-cam:active .m-feed > img { filter: brightness(1.35); }
+
+/* emblem block: radar, rings, orbiting points, float + glare */
+.m-radar { position: absolute; left: 50%; top: 50%; width: 92%; aspect-ratio: 1; translate: -50% -50%; pointer-events: none; }
+.m-radar > span { position: absolute; inset: 0; }
+.m-orbit { position: absolute; left: 50%; top: 50%; width: 86%; aspect-ratio: 1; translate: -50% -50%; animation: spin 9s linear infinite; pointer-events: none; }
+.m-orbit.rev { width: 100%; animation-duration: 16s; animation-direction: reverse; }
+.m-orbit > span { position: absolute; left: 50%; top: -3px; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #fff; box-shadow: 0 0 6px #fff, 0 0 16px rgba(255,255,255,.6); }
+.m-emblem-float { position: relative; animation: float-y 6s ease-in-out 1.6s infinite; }
+
+/* scan beams (percent based for fluid sizes) */
+.m-scan-wrap { position: relative; }
+.m-beam-y, .m-beam-x { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.m-beam-y span { position: absolute; left: 0; right: 0; height: 40px; top: -40px; display: block;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,.12) 80%, rgba(255,255,255,.85) 98%, transparent);
+  animation: m-beam-y 3.6s cubic-bezier(.45,0,.55,1) 1.2s infinite both; }
+@keyframes m-beam-y { from { top: -40px; } to { top: 100%; } }
+.m-beam-x span { position: absolute; top: 0; bottom: 0; left: 0; width: 1px; display: block; background: #fff; box-shadow: 0 0 10px #fff, 0 0 2px #fff;
+  animation: m-beam-x 2.6s linear 1s infinite both; }
+@keyframes m-beam-x { from { left: 0; } to { left: 100%; } }
+.m-img.face-scan::after { animation: m-scan-top 3.5s linear infinite; }
+@keyframes m-scan-top { 0% { top: 0; opacity: 0; } 10%, 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+
+/* header line pulse */
+.m-top-pulse { position: absolute; left: 20px; right: 20px; bottom: 0; height: 1px; overflow: hidden; z-index: 1; pointer-events: none; }
+.m-top-pulse::after { content: ''; position: absolute; top: 0; left: -90px; width: 90px; height: 1px; background: linear-gradient(90deg, transparent, #fff 70%, transparent);
+  animation: m-pulse 3.2s ease-in-out 1s infinite both; }
+@keyframes m-pulse { from { left: -90px; } to { left: 100%; } }

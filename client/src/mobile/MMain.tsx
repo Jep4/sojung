@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
 import { asset, useContent } from '../lib/content';
 import { seoulParts, useNow } from '../lib/session';
-import { Typewriter } from '../fx/Scramble';
+import { Scramble, Typewriter } from '../fx/Scramble';
 import { MImg, MShell } from './kit';
 
 const CAMS = [
@@ -55,14 +55,15 @@ export default function MMain() {
   const submit = (e: React.FormEvent) => { e.preventDefault(); if (name.trim()) api.logName(name).then(() => { setSent(true); refresh(); }); };
 
   return (
-    <MShell percent="100%">
+    <MShell percent="100%" pulse>
       <section className="m-sec">
-        <p className="m-small">TOTAL CAMERAS<br />04 / 04 ONLINE</p>
+        <p className="m-small"><Scramble text={'TOTAL CAMERAS\n04 / 04 ONLINE'} delay={200} /></p>
         <div className="m-cams">
           {CAMS.map((c, i) => (
-            <Link key={i} to={`/targets/${i + 1}`} className="m-cam cctv" aria-label={`CAM ${i + 1} — TARGET 0${i + 1}`}>
-              <span className="m-cam-label"><span>CAM 0127 / 13TH FLOOR OFFICE</span><span><i className="m-dot blink" />REC</span></span>
-              <MImg src={asset(`main/cctv${i + 1}.webp`)} ratio={435 / c.h} crop={c.crop} stroke={0.5} />
+            <Link key={i} to={`/targets/${i + 1}`} className="m-cam" aria-label={`CAM ${i + 1} — TARGET 0${i + 1}`}
+              style={{ ['--d' as string]: `${0.3 + i * 0.22}s`, ['--g' as string]: `${6 + i * 1.7}s` }}>
+              <span className="m-cam-label"><span><Scramble text="CAM 0127 / 13TH FLOOR OFFICE" delay={300 + i * 220} /></span><span><i className="m-dot blink" />REC</span></span>
+              <MImg src={asset(`main/cctv${i + 1}.webp`)} ratio={435 / c.h} crop={c.crop} stroke={0.5} className="m-feed" />
               <Stamp offset={i * 7000} />
             </Link>
           ))}
@@ -70,17 +71,26 @@ export default function MMain() {
       </section>
 
       <section className="m-sec m-emblem-wrap">
+        <div className="m-radar fx-only" aria-hidden><span className="fx-radar" /><span className="fx-ripple" /><span className="fx-ripple late" /></div>
         <img className="m-emblem-ring spin-rev" src={asset('main/ellipse-dashed.svg')} alt="" />
-        <MImg src={asset('main/emblem.webp')} ratio={421 / 329} className="emblem-float m-emblem" />
+        <div className="m-orbit fx-only" aria-hidden><span /></div>
+        <div className="m-orbit rev fx-only" aria-hidden><span /></div>
+        <div className="m-emblem-float">
+          <MImg src={asset('main/emblem.webp')} ratio={421 / 329} className="emblem-in m-emblem" />
+          <div className="fx-glare fx-only" aria-hidden style={{ position: 'absolute', inset: 0, WebkitMaskImage: `url("${asset('main/emblem.webp')}")`, maskImage: `url("${asset('main/emblem.webp')}")` }} />
+        </div>
       </section>
 
       <section className="m-sec m-two">
         <div className="m-panel">
-          <MImg src={asset('main/building.webp')} ratio={220 / 561} crop={{ w: 152.95, h: 100, l: -25.82, t: 0 }} />
+          <div className="m-scan-wrap">
+            <MImg src={asset('main/building.webp')} ratio={220 / 561} crop={{ w: 152.95, h: 100, l: -25.82, t: 0 }} className="boot-fade" />
+            <div className="m-beam-y fx-only" aria-hidden><span /></div>
+          </div>
           <p className="m-small white">13TH FLOOR OFFICE<br /><br />9TH FLOOR OFFICE<br /><br />IN-HOUSE HOSPITAL<br /><br />CONTROL ROOM</p>
         </div>
         <div className="m-panel">
-          <MImg src={asset('main/face.webp')} ratio={293 / 371} crop={{ w: 100.09, h: 105.39, l: -0.04, t: -2.43 }} className="face-scan" />
+          <MImg src={asset('main/face.webp')} ratio={293 / 371} crop={{ w: 100.09, h: 105.39, l: -0.04, t: -2.43 }} className="face-scan boot-fade late" />
           <p className="m-small white center">VERIFY YOUR IDENTITY.</p>
         </div>
       </section>
@@ -92,12 +102,15 @@ export default function MMain() {
             onChange={(e) => setName(e.target.value.toUpperCase().replace(/[^A-Z0-9 ._-]/g, ''))} />
           {sent && <span className="m-small">LOGGED</span>}
         </form>
-        <p className="m-small">ACTIVITY LOG<br />...<br />{log.map((l) => <span key={l}>{l}<br /></span>)}</p>
+        <p className="m-small">ACTIVITY LOG<br />...<br />{log.map((l) => <span key={l}>{l}<br /></span>)}<span className="caret">_</span></p>
         <p className="m-small">BUILDING OVERVIEW<br /><br />01 13TH FLOOR OFFICE<br />01 13TH FLOOR OFFICE<br />01 13TH FLOOR OFFICE<br />01 13TH FLOOR OFFICE</p>
       </section>
 
       <section className="m-sec">
-        <MImg src={asset('main/waveform.webp')} ratio={396 / 145} crop={{ w: 100, h: 163.94, l: 0, t: -31.72 }} className="wave" />
+        <div className="m-scan-wrap">
+          <MImg src={asset('main/waveform.webp')} ratio={396 / 145} crop={{ w: 100, h: 163.94, l: 0, t: -31.72 }} className="wave" />
+          <div className="m-beam-x fx-only" aria-hidden><span /></div>
+        </div>
         <button type="button" className="m-link u" onClick={() => setPopup(true)}>상부 교신 다시보기</button>
       </section>
       {popup && <MPopup onClose={close} />}
