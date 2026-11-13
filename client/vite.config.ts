@@ -6,7 +6,14 @@ import { fileURLToPath } from 'node:url';
 export default defineConfig(({ mode }) => {
   const isStatic = mode === 'static';
   return {
-    plugins: [react()],
+    plugins: [react(), isStatic && {
+      name: 'static-fonts',
+      // fonts come from Google Fonts in the static build (fontsource files are aliased away)
+      transformIndexHtml: (html: string) => html.replace('</head>',
+        '    <link rel="preconnect" href="https://fonts.googleapis.com" />\n' +
+        '    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />\n' +
+        '    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;600&display=swap" />\n  </head>'),
+    }],
     base: isStatic ? './' : '/',
     resolve: isStatic ? {
       alias: [{ find: /^@fontsource\/gothic-a1\/\d+\.css$/, replacement: fileURLToPath(new URL('./src/empty.css', import.meta.url)) }],

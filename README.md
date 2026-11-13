@@ -35,6 +35,14 @@ npm start
 | `/targets/:id/report` | 관찰 보고서 (102:400, 22:2, 102:463, 102:337) + 모니터링 사진 (164:1488~1495) |
 | `/org`, `/org/ethan-vence` | 조직도 (4:1004) · 이든 밴스 클릭 시 (102:765) |
 
+## 프론트만 웹사이트로 올리기 (GitHub Pages)
+
+서버 없이 동작하는 정적 버전(`npm --prefix client run build:static` → `client/dist-static/`)이 있습니다. 문구는 번들에 포함되고, 접근 코드(0000)와 활동 기록은 브라우저 안에서 처리되며, 화면 크기와 상관없이 데스크톱 레이아웃으로 보입니다.
+
+1. 저장소를 공개로 전환 (Settings → General → Danger Zone → Change visibility)
+2. Settings → Pages → Source를 **GitHub Actions**로 선택
+3. Actions 탭에서 **Deploy to GitHub Pages**를 실행하거나 브랜치에 push → `https://jep4.github.io/sojung/`
+
 ## Figma를 그대로 옮긴 방식
 
 - **1920×1080 고정 판**: 모든 레이어를 Figma 프레임 좌표 그대로 배치하고, 판 전체를 창 크기에 맞춰 균일하게 확대·축소합니다(`client/src/ui/Stage.tsx`, `ui/prim.tsx`).
