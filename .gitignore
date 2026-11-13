@@ -5,3 +5,4 @@ qa/
 server/data/activity.json
 *.log
 .DS_Store
+dist-static/

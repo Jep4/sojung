@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { api } from './api';
 import type { Content } from './types';
+import { STATIC } from './env';
 
 const Ctx = createContext<Content | null>(null);
 
@@ -24,4 +25,4 @@ export function useContent(): Content {
 }
 
 /** Asset path helper — everything in /public/assets comes straight from the Figma file. */
-export const asset = (p: string) => `/assets/${p}`;
+export const asset = (p: string) => `${STATIC ? '' : '/'}assets/${p}`;
