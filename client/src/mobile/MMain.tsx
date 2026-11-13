@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
 import { asset, useContent } from '../lib/content';
 import { seoulParts, useNow } from '../lib/session';
@@ -43,9 +43,9 @@ export function MPopup({ onClose }: { onClose: () => void }) {
 }
 
 export default function MMain() {
-  const location = useLocation();
   const navigate = useNavigate();
-  const [popup, setPopup] = useState(() => Boolean((location.state as { popup?: boolean } | null)?.popup));
+  // Phones: no automatic transmission on first entry — only via '상부 교신 다시보기'.
+  const [popup, setPopup] = useState(false);
   const [log, setLog] = useState<string[]>([]);
   const [name, setName] = useState('');
   const [sent, setSent] = useState(false);
