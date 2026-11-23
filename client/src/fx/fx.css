@@ -225,9 +225,6 @@ html.qa .fx-only { display: none !important; }
 
 
 /* ===== v3: louder motion everywhere (feedback: "전반적으로 화려하게") ===== */
-.orbit { animation-duration: 14s; }
-.spin-slow { animation-duration: 18s; }
-.spin-rev { animation-duration: 26s; }
 .orbit-culture { position: absolute; inset: 0; transform-origin: 265px 499px; animation: spin 30s linear infinite; pointer-events: none; }
 
 /* equipment hero: bigger drift with a slight sway (translate/rotate compose with the Figma rotation) */
@@ -263,8 +260,6 @@ html.qa .fx-only { display: none !important; }
 @keyframes run-x { from { transform: translateX(-170px); } to { transform: translateX(calc(var(--len) + 10px)); } }
 @keyframes run-y { from { transform: translateY(-170px); } to { transform: translateY(calc(var(--len) + 10px)); } }
 
-/* brighter travelling points */
-.fx-dot { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; box-shadow: 0 0 8px #fff, 0 0 22px rgba(255,255,255,.75), 0 0 40px rgba(255,255,255,.3); }
 .fx-radar { animation-duration: 4s, 1s; }
 
 /* Reduced motion: no flashes, shakes or glitches; drifts and rotations stay */

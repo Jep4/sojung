@@ -177,9 +177,6 @@ html.m .m-root .m-sec:nth-of-type(5) { animation-delay: .75s; }
 html.m, html.m body { overflow-x: clip; }
 
 /* v3 louder motion on phones */
-.m-orbit { animation-duration: 6s; }
-.m-orbit.rev { animation-duration: 10s; }
-.m-emblem-ring.spin-rev { animation-duration: 16s; }
 .m-hero.hero-float { animation: float-soft 5s ease-in-out infinite; }
 .m-hero.hero-float img { animation: hero-in .6s steps(6) both, sway 7s ease-in-out infinite; }
 @keyframes sway { 0%, 100% { rotate: 0deg; } 50% { rotate: 2.5deg; } }

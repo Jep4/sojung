@@ -31,10 +31,6 @@ export function OrbitDots() {
     { path: circlePath(1716, 540, 620.75, true), dur: 32, delay: -5 },
     { path: circlePath(1716, 540, 620.75, true), dur: 32, delay: -21 },
     { path: circlePath(1145, 540.5, 207.5, true), dur: 9, delay: 0 },
-    { path: circlePath(1145, 540.5, 207.5, true), dur: 9, delay: -4.5 },
-    { path: circlePath(1145.5, 540.5, 238.25), dur: 7, delay: -2 },
-    { path: circlePath(573, 540, 620.75), dur: 26, delay: -6.5 },
-    { path: circlePath(1716, 540, 620.75, true), dur: 32, delay: -13 },
   ];
   return (
     <div className="fx-only" aria-hidden>
