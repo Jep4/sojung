@@ -62,13 +62,34 @@ export function Scanners() {
   );
 }
 
-/** Rotating logo video (Figma 11/21 feedback). Black background disappears with mix-blend screen. */
+/**
+ * Rotating logo video (Figma 11/21 feedback), keyed onto the HUD.
+ * Safari ignores mix-blend-mode on <video> (the black square would hide the radar, rings and orbit
+ * behind it), so the frames are drawn into a <canvas> and the canvas is screen-blended instead.
+ */
 export function LogoVideo({ x, y, size, className = '' }: { x?: number; y?: number; size?: number; className?: string }) {
-  const ref = useRef<HTMLVideoElement>(null);
-  useEffect(() => { const v = ref.current; if (!v) return; v.muted = true; if (QA) v.pause(); else v.play().catch(() => undefined); }, []);
+  const video = useRef<HTMLVideoElement>(null);
+  const canvas = useRef<HTMLCanvasElement>(null);
+  useEffect(() => {
+    const v = video.current, c = canvas.current;
+    if (!v || !c) return;
+    const ctx = c.getContext('2d');
+    let raf = 0; let alive = true;
+    const draw = () => {
+      if (!alive) return;
+      if (ctx && v.readyState >= 2) ctx.drawImage(v, 0, 0, c.width, c.height);
+      if (!QA) raf = requestAnimationFrame(draw);
+    };
+    const start = () => { draw(); if (!QA) v.play().catch(() => undefined); };
+    v.muted = true;
+    if (v.readyState >= 2) start(); else v.addEventListener('loadeddata', start, { once: true });
+    return () => { alive = false; cancelAnimationFrame(raf); v.removeEventListener('loadeddata', start); };
+  }, []);
   const style: CSSProperties = x === undefined ? {} : abs(x, y ?? 0, size ?? 0, size ?? 0);
   return (
-    <video ref={ref} className={`logo-video emblem-in-video ${className}`} style={style} src={asset('main/logo.mp4')}
-      muted loop playsInline autoPlay={!QA} preload="auto" aria-label="BRACER 엠블럼" />
+    <div className={`logo-video emblem-in-video ${className}`} style={style} aria-label="BRACER 엠블럼" role="img">
+      <canvas ref={canvas} width={720} height={720} />
+      <video ref={video} className="logo-video-src" src={asset('main/logo.mp4')} muted loop playsInline autoPlay={!QA} preload="auto" aria-hidden />
+    </div>
   );
 }
