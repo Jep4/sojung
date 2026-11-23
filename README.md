@@ -50,6 +50,19 @@ npm start
 - **벡터는 Figma SVG 그대로**: 로고, 엠블럼, 원·점선 원, 화살표, 십자선 등은 Figma에서 내보낸 SVG 파일입니다. 0.5px 선은 Figma 렌더와 같은 굵기로 보이도록 CSS로 그립니다.
 - **글자·단색 도형만 코드**: 문구는 `server/data/content.json`에 Figma 원문 그대로 들어 있고 `/api/content`로 내려옵니다.
 
+### 영상
+
+11/21 피드백의 Google Drive 영상 2개는 웹용으로 다시 인코딩했습니다.
+
+```bash
+ffmpeg -i 로고.mp4 -c:v libx264 -crf 23 -pix_fmt yuv420p -an -movflags +faststart logo-web.mp4
+ffmpeg -i BRACER_18s.mp4 -vf scale=960:540 -c:v libx264 -crf 33 -pix_fmt yuv420p -an -movflags +faststart transmission-web.mp4
+```
+
+### 사이트 QR 코드
+
+`qr/bracer-site-qr.png`, `qr/bracer-site-qr.svg` → https://jep4.github.io/sojung/
+
 ### 에셋 다시 받기
 
 `scripts/figma-assets.txt`에 Figma MCP가 발급한 다운로드 주소가 있습니다(7일 후 만료).
@@ -77,7 +90,8 @@ python3 scripts/build-assets.py      # client/public/assets/ 로 변환·복사
 - 타겟 → 상세 관찰 보고서(모니터링 사진 3장 넘겨 보기) → `작전 장비 확인하기`는 장비 목록으로 이동하며 해당 장비 카드를 보여 줌
 - 조직도: 이든 밴스만 클릭 가능, ACCESS RESTRICTED 칸은 클릭 불가 모션
 - 화면 전환 글리치, 스캔라인, 텍스트 디코딩 등 SF 패널 연출(정지 상태는 Figma와 동일)
-- 상부 교신 영상: 아직 placeholder입니다. 영상을 `client/public/assets/popup/`에 넣고 `content.json`의 `transmission.video`에 경로(예: `popup/transmission.mp4`)를 적으면 재생됩니다.
+- 상부 교신: 영상(`assets/popup/transmission.mp4`) 위로 `content.json`의 `transmission.subtitles` 자막이 시간에 맞춰 나오고, 영상이 끝나면 닫힙니다. 폰에서는 처음 진입할 때 자동으로 뜨지 않습니다.
+- 메인 엠블럼: 회전하는 로고 영상(`assets/main/logo.mp4`, 검은 배경은 screen 합성으로 투명하게 처리)
 
 ## 모바일
 
@@ -95,8 +109,6 @@ node scripts/smoke.mjs                # 주요 흐름 클릭 테스트
 
 ## Figma에서 확인이 필요한 부분 (시안 그대로 구현함)
 
-- 장비 목록 카드 4개의 제목이 모두 `OP.SPINE 척추 방어 작전 장비`
 - 관찰 보고서 4개 모두 `TARGET 01 모니터링`
-- TARGET 02 이름 표기: 상단 `엘리노르 밴스` / 표 `엘리노어 반스`
 - TARGET 03·04 요청 문구의 작전명 뒤 `척추 방어 작전`, TARGET 04 보고서의 `OP.SPINE` 표기
 - ACTIVITY LOG 시각 `39:31:09`

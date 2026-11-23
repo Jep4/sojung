@@ -40,15 +40,16 @@ export default function Org() {
       <Pic src={asset('org/silhouettes.webp')} x={1181} y={489} w={118} h={177} crop={{ w: 353.24, h: 235.71, l: -197.46, t: -21.43 }} />
       {SMALL.slice(1).map((x) => <Box key={x} x={x} y={866} w={49} h={49} bg="#000" border={0.5} />)}
       <Pic src={asset('org/ethan.webp')} x={876} y={492} w={169} h={168} fit="fill" to="/org/ethan-vence" label="Ethan Vence 프로필" className="ethan-card" />
-      {[NAMES[0]].map((x) => <NameTag key={x} x={x} />)}
+      {/* 11/21: only Ethan's name exists; the others are redacted bars with nothing underneath */}
+      <NameTag x={NAMES[0]} />
       <Restricted x={RESTRICTED[0]} denied={denied === 0} />
-      {NAMES.slice(1).map((x) => <NameTag key={x} x={x} />)}
+      {NAMES.slice(1).map((x) => <NameTag key={x} x={x} hidden={x !== 960.5} />)}
       {RESTRICTED.slice(1).map((x, i) => <Restricted key={x} x={x} denied={denied === i + 1} />)}
       {LOCKED.map((l, i) => (
         <Box key={l.box} x={l.box} y={483} w={190} h={190} onClick={() => deny(i)} label="접근 권한 없음"
           className={`locked${denied === i ? ' denied' : ''}`} />
       ))}
-      {BARS.map((x) => <Box key={x} x={x} y={693} w={113} h={23} bg="#fff" className="redact-static" />)}
+      {BARS.map((x) => <Box key={x} x={x} y={693} w={113} h={23} bg="#fff" />)}
       {BRANCHES.map(([hx, a, b, c]) => (
         <Fragment key={hx}>
           <HLine x={hx} y={808} len={144} />
@@ -62,10 +63,10 @@ export default function Org() {
   );
 }
 
-function NameTag({ x }: { x: number }) {
+function NameTag({ x, hidden }: { x: number; hidden?: boolean }) {
   return (
     <Txt x={x} y={693} size={20} lh={1.5} align="center" nowrap center>
-      {'Ethan Vence\n'}<Run fontSize="13px" color="var(--gray)">Elite Agent</Run>
+      {hidden ? <Run visibility="hidden">{'Ethan Vence'}</Run> : 'Ethan Vence'}{'\n'}<Run fontSize="13px" color="var(--gray)">Elite Agent</Run>
     </Txt>
   );
 }

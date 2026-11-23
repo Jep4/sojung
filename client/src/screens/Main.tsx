@@ -8,9 +8,10 @@ import { Box, HLine, Pic, Svg, Txt, VLine } from '../ui/prim';
 import { Clock, Header } from '../ui/chrome';
 import { Scramble } from '../fx/Scramble';
 import Popup from './Popup';
-import { AxisPulses, EmblemGlare, OrbitDots, Radar, Scanners } from './MainFx';
+import { AxisPulses, LogoVideo, OrbitDots, Radar, Scanners } from './MainFx';
 
 // Figma "메인 화면" (3:764)
+const CAM_LABELS = ['CAM 0127 / 13TH FLOOR OFFICE', 'CAM 0153 / 9TH FLOOR OFFICE', 'CAM 0045 / IN-HOUSE HOSPITAL', 'CAM 1497 / CONTROL ROOM'];
 const CAMS = [
   { y: 180, h: 164, crop: { w: 100, h: 287.02, l: 0, t: -143.71 }, labelY: 143, dotY: 148, stampY: 314.55 },
   { y: 404, h: 165, crop: { w: 100, h: 148.37, l: 0, t: -19.05 }, labelY: 368, dotY: 373, stampY: 539.3 },
@@ -95,16 +96,16 @@ export default function Main() {
       {CAMS.map((c, i) => (
         <Txt key={i} x={469} y={c.labelY} w={26} h={i === 2 ? 19 : 18} size={13} lh={1.5}>REC</Txt>
       ))}
-      <Txt x={60} y={143} w={193} h={18} size={13} lh={1.5}><Scramble text="CAM 0127 / 13TH FLOOR OFFICE" delay={350} /></Txt>
+      <Txt x={60} y={143} w={193} h={18} size={13} lh={1.5}><Scramble text={CAM_LABELS[0]} delay={350} /></Txt>
       <Txt x={541} y={219} w={193} h={66} size={13}><Scramble text={'TOTAL CAMERAS\n04 / 04 ONLINE'} delay={500} /></Txt>
       <Txt x={541} y={900} w={193} h={126} size={13} color="var(--gray)">
-        <Scramble text={'BUILDING OVERVIEW\n\n01 13TH FLOOR OFFICE\n01 13TH FLOOR OFFICE\n01 13TH FLOOR OFFICE\n01 13TH FLOOR OFFICE'} delay={900} duration={1100} />
+        <Scramble text={'BUILDING OVERVIEW\n\n01 13TH FLOOR OFFICE\n02 9TH FLOOR OFFICE\n03 IN-HOUSE HOSPITAL\n04 CONTROL ROOM'} delay={900} duration={1100} />
       </Txt>
       <Txt x={541} y={143} w={308} h={66} size={13} color="var(--gray)">{'CENTRAL MONITORING SYSTEM\nVER 1.0.0'}</Txt>
       <CodeName onLogged={refreshLog} />
       <Clock />
       {CAMS.slice(1).map((c, i) => (
-        <Txt key={i} x={60} y={c.labelY} w={193} h={i === 1 ? 19 : 18} size={13} lh={1.5}><Scramble text="CAM 0127 / 13TH FLOOR OFFICE" delay={570 + i * 220} /></Txt>
+        <Txt key={i} x={60} y={c.labelY} w={i === 1 ? 232 : 193} h={i === 1 ? 19 : 18} size={13} lh={1.5}><Scramble text={CAM_LABELS[i + 1]} delay={570 + i * 220} /></Txt>
       ))}
       {CAMS.map((c, i) => <CamStamp key={i} y={c.stampY} offset={i * 7_000} />)}
 
@@ -131,9 +132,9 @@ export default function Main() {
       <Box x={873} y={603} w={4} h={4} bg="#fff" className="pulse-sq" />
       <Box x={873} y={716} w={4} h={4} bg="#fff" className="pulse-sq" />
       <Svg src={asset('main/circle-1242.svg')} x={1095} y={-81} w={1242} h={1242} />
+      {/* 11/21 feedback: the chrome emblem is now the rotating logo video (black keyed out with screen blend) */}
       <div className="emblem-wrap">
-        <Pic src={asset('main/emblem.webp')} x={938} y={374} w={421} h={329} className="emblem-in" />
-        <EmblemGlare />
+        <LogoVideo x={901.9} y={296.1} size={484} />
       </div>
       <Svg src={asset('common/crosshair.svg')} x={884} y={223} w={23} h={31} className="xhair" />
       <Svg src={asset('common/crosshair.svg')} x={884} y={900} w={23} h={31} className="xhair late" />

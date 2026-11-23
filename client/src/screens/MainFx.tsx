@@ -2,7 +2,8 @@
  * Extra motion graphics for the main screen (designer note: "정신없는 SF 조작 패널처럼, 멋있어 보이면 추가해도 됨").
  * All layers are `fx-only`: hidden in ?qa=1 and for prefers-reduced-motion, so the settled frame still equals Figma.
  */
-import type { CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
+import { QA } from '../lib/qa';
 import { asset } from '../lib/content';
 
 const abs = (x: number, y: number, w: number, h: number, extra?: CSSProperties): CSSProperties =>
@@ -51,12 +52,6 @@ export function AxisPulses() {
   );
 }
 
-/** Specular sweep clipped to the chrome emblem's own alpha. */
-export function EmblemGlare() {
-  const url = `url("${asset('main/emblem.webp')}")`;
-  return <div className="fx-only fx-glare" aria-hidden style={abs(938, 374, 421, 329, { WebkitMaskImage: url, maskImage: url })} />;
-}
-
 /** Scan beam over the building section and a playhead over the waveform. */
 export function Scanners() {
   return (
@@ -64,5 +59,16 @@ export function Scanners() {
       <div className="fx-beam-y" style={abs(553, 297, 220, 561, { overflow: 'hidden' })}><span /></div>
       <div className="fx-beam-x" style={abs(1455, 838, 396, 145, { overflow: 'hidden' })}><span /></div>
     </div>
+  );
+}
+
+/** Rotating logo video (Figma 11/21 feedback). Black background disappears with mix-blend screen. */
+export function LogoVideo({ x, y, size, className = '' }: { x?: number; y?: number; size?: number; className?: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  useEffect(() => { const v = ref.current; if (!v) return; v.muted = true; if (QA) v.pause(); else v.play().catch(() => undefined); }, []);
+  const style: CSSProperties = x === undefined ? {} : abs(x, y ?? 0, size ?? 0, size ?? 0);
+  return (
+    <video ref={ref} className={`logo-video emblem-in-video ${className}`} style={style} src={asset('main/logo.mp4')}
+      muted loop playsInline autoPlay={!QA} preload="auto" aria-label="BRACER 엠블럼" />
   );
 }

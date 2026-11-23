@@ -209,3 +209,12 @@ html.qa.qa-hover .equip-card .equip-img.hover { opacity: 1 !important; }
 /* QA / reduced motion: extra layers off so the frame equals Figma */
 html.qa .fx-only { display: none !important; }
 @media (prefers-reduced-motion: reduce) { .fx-only { display: none !important; } }
+
+/* logo video (replaces the still emblem): black → transparent over the HUD */
+.logo-video { display: block; object-fit: contain; mix-blend-mode: screen; pointer-events: none; }
+.emblem-in-video { animation: emblem-in-v 1.1s cubic-bezier(.2,.8,.2,1) .5s both; }
+@keyframes emblem-in-v { 0% { opacity: 0; transform: scale(.7); filter: brightness(4) blur(8px); } 40% { opacity: 1; } 100% { transform: none; filter: none; } }
+
+/* equipment illustration panel */
+.illus-in > img { animation: illus-draw 1.1s steps(10) .3s both; }
+@keyframes illus-draw { from { clip-path: inset(0 0 100% 0); opacity: .2; } to { clip-path: inset(0); opacity: 1; } }

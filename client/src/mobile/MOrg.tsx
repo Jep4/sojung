@@ -24,7 +24,7 @@ export default function MOrg() {
         {SIL.map((s, i) => s ? (
           <button type="button" key={i} className={`m-agent locked${denied === i ? ' denied' : ''}`} onClick={() => deny(i)} aria-label="접근 권한 없음">
             <div className="m-agent-box"><MImg src={asset('org/silhouettes.webp')} ratio={s.r ?? 120 / 177} crop={s.crop} /><span className="restricted">ACCESS<br />RESTRICTED</span></div>
-            <span className="m-agent-name"><i className="redact-static" /></span>
+            <span className="m-agent-name"><i /></span>
             <span className="m-small">Elite Agent</span>
           </button>
         ) : (

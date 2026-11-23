@@ -21,7 +21,7 @@ export default function Equipment() {
       <Header active="equipment" />
       {equipment.map((op) => <Box key={op.id} x={CARDS[op.card].x} y={305} w={435} h={718} bg="#000" border={0.5} />)}
       {equipment.map((op) => (
-        <Txt key={op.id} x={CARDS[op.card].x} y={225} w={340} size={20} lh={1.5}>{'OP.SPINE\n척추 방어 작전 장비'}</Txt>
+        <Txt key={op.id} x={CARDS[op.card].x} y={225} w={340} size={20} lh={1.5}>{op.cardTitle}</Txt>
       ))}
       <SysInfo color="var(--gray)" />
       {equipment.map((op) => {

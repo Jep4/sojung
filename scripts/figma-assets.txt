@@ -143,3 +143,12 @@ hi/org-silhouettes https://www.figma.com/api/mcp/asset/d66c592c-5300-4882-b0d5-2
 hi/org-ethan https://www.figma.com/api/mcp/asset/daba0748-71e4-47e7-8508-46241493a907
 hi/popup-noise https://www.figma.com/api/mcp/asset/23cf1cf5-6259-4a3a-a3bf-7bb381466c01
 hi/org-ethan-render https://www.figma.com/api/mcp/asset/1a4e3547-f765-42b5-b76a-d2d610cf054a.png
+illus/posture https://www.figma.com/api/mcp/asset/779a81ee-bad8-46a7-92b1-0706185defef.svg
+illus/tape https://www.figma.com/api/mcp/asset/9ae16a43-ac96-4b2f-9ed9-f2ecd34c3471.svg
+illus/belt https://www.figma.com/api/mcp/asset/26eaeabd-77c5-4e5f-af17-8e9bbeb89532.svg
+illus/innerwear https://www.figma.com/api/mcp/asset/06d0e9fd-cdb0-4640-b2a6-91edab3cf001.svg
+illus/calf https://www.figma.com/api/mcp/asset/91c32a0b-32a8-4aed-a0f7-ec3dd29404f2.svg
+illus/gua https://www.figma.com/api/mcp/asset/fb0c66e3-ccbd-4620-8e99-f5bb1f57038e.svg
+illus/wrist https://www.figma.com/api/mcp/asset/98685815-df90-4e86-a6e3-8f685cc42872.svg
+illus/foot https://www.figma.com/api/mcp/asset/5e279fc6-b0d0-4c82-b4c0-e8605d2330e5.svg
+illus/hand https://www.figma.com/api/mcp/asset/f45ecd9c-2279-42f6-8fe9-9f6986f37b18.svg

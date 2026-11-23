@@ -33,6 +33,9 @@ export default function MEquipmentDetail() {
         <button type="button" onClick={() => go(idx - 1)} aria-label="이전 장비"><img src={asset('common/arrow.svg')} alt="" style={{ transform: 'scaleX(-1)' }} /></button>
         <button type="button" onClick={() => go(idx + 1)} aria-label="다음 장비"><img src={asset('common/arrow.svg')} alt="" /></button>
       </div>
+      <div className="m-illus">
+        <img key={it.image} className="illus-in-img" src={asset(`illus/${it.image}.svg`)} alt="" style={{ width: `${(it.illus.w / 340) * 100}%` }} />
+      </div>
       <ul className="m-items">
         {op.items.map((x, i) => (
           <li key={i} className={i === idx ? 'on' : ''}>

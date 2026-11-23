@@ -5,10 +5,12 @@ export type CropT = [number, number, number, number];
 export type EquipItem = {
   name: string; text: string; image: string; thumb: CropT;
   hero: { x: number; y: number; w: number; h: number; rotate?: number };
+  illus: { x: number; y: number; w: number; h: number };
+  graphicsOver?: boolean;
 };
 export type Operation = {
   id: string; code: string; card: string; target: number;
-  title: string; desc: string; descY: number; items: EquipItem[];
+  title: string; cardTitle: string; desc: string; descY: number; items: EquipItem[];
 };
 export type Shot = { crop?: CropT; gray?: boolean };
 export type Target = {
@@ -22,5 +24,5 @@ export type Content = {
   articles: string[];
   targets: Target[];
   ethan: { name: string; report: Run[] };
-  transmission: { video: string | null; subtitle: string };
+  transmission: { video: string | null; subtitle: string; subtitles: { t0: number; t1: number; text: string }[] };
 };

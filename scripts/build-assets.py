@@ -67,8 +67,21 @@ SVG = {
     'org/emblem': 'org/emblem.svg',
 }
 
+ILLUS = ['posture', 'tape', 'belt', 'innerwear', 'calf', 'gua', 'wrist', 'foot', 'hand']  # Figma 209:* line art
+VIDEO = {  # 11/21 feedback videos (Google Drive), re-encoded for the web with ffmpeg (see README)
+    'popup/transmission.mp4': 'video/transmission-web.mp4',
+    'main/logo.mp4': 'video/logo-web.mp4',
+}
+
 def main():
     missing = []
+    for name in ILLUS:
+        SVG[f'illus/{name}'] = f'illus/{name}.svg'
+    for dest, src in VIDEO.items():
+        s = os.path.join(RAW, src)
+        if not os.path.exists(s): missing.append(src); continue
+        d = os.path.join(OUT, dest); os.makedirs(os.path.dirname(d), exist_ok=True)
+        shutil.copyfile(s, d)
     for dest, src in SVG.items():
         s = os.path.join(RAW, src)
         if not os.path.exists(s): missing.append(src); continue
@@ -82,6 +95,9 @@ def main():
         im = im.convert('RGBA') if (im.mode in ('RGBA', 'LA', 'P') and 'A' in im.getbands() or im.mode == 'P') else im.convert('RGB')
         if im.mode == 'RGBA' and im.getextrema()[3][0] == 255: im = im.convert('RGB')
         im.save(d, 'WEBP', quality=92, method=6)
+    # browser-tab icon: the access-screen emblem in black (11/21 feedback: white → black)
+    em = open(os.path.join(OUT, 'password', 'emblem.svg')).read()
+    open(os.path.join(OUT, 'common', 'favicon.svg'), 'w').write(em.replace('fill="#FDFCFB"', 'fill="#000000"').replace('fill="white"', 'fill="#000000"'))
     if missing:
         print('missing raw files:', missing); sys.exit(1)
     print('assets written to', OUT)
