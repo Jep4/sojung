@@ -3,6 +3,7 @@ import { asset } from '../lib/content';
 import { seoulParts, useNow, useProgress } from '../lib/session';
 import { HLine, Svg, Txt } from './prim';
 import { Scramble } from '../fx/Scramble';
+import { Pulses } from '../screens/MainFx';
 
 export type Theme = 'dark' | 'light';
 type NavKey = 'equipment' | 'culture' | 'org';
@@ -23,6 +24,7 @@ export function Header({ theme = 'dark', active, percent = '20%', logoLink = tru
       <Svg src={asset(theme === 'dark' ? 'common/logo.svg' : 'common/logo-dark.svg')} x={60} y={60} w={227} h={31.2867}
         to={logoLink ? '/main' : undefined} label="BRACER — 메인으로" />
       <HLine color={ink} x={348} y={76} len={669} className="hdr-line" />
+      <Pulses dark={theme === 'light'} lines={[{ x: 348, y: 76, len: 669, dir: 'x', dur: 3.2, delay: 0.8 }]} />
       <Txt x={1055} y={66} size={13} lh={1.6} color="var(--gray)" nowrap>{pct}</Txt>
       {NAV.map((n) => (
         <Txt key={n.key} x={n.x} y={60} size={18} lh={1.5} color={ink} underline nowrap

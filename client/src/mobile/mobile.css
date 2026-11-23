@@ -175,3 +175,20 @@ html.m .m-root .m-sec:nth-of-type(5) { animation-delay: .75s; }
 /* keep the expanding pulse rings from widening the phone viewport */
 .m-emblem-wrap { overflow: hidden; }
 html.m, html.m body { overflow-x: clip; }
+
+/* v3 louder motion on phones */
+.m-orbit { animation-duration: 6s; }
+.m-orbit.rev { animation-duration: 10s; }
+.m-emblem-ring.spin-rev { animation-duration: 16s; }
+.m-hero.hero-float { animation: float-soft 5s ease-in-out infinite; }
+.m-hero.hero-float img { animation: hero-in .6s steps(6) both, sway 7s ease-in-out infinite; }
+@keyframes sway { 0%, 100% { rotate: 0deg; } 50% { rotate: 2.5deg; } }
+.m-card-img { animation: float-soft 6s ease-in-out infinite; }
+.m-card:nth-child(2) .m-card-img { animation-delay: -1.5s; } .m-card:nth-child(3) .m-card-img { animation-delay: -3s; } .m-card:nth-child(4) .m-card-img { animation-delay: -4.5s; }
+.m-org-emblem { animation: float-soft 6s ease-in-out infinite, glow 3.2s ease-in-out infinite; }
+.m-root .dossier-photo, .m-illus { position: relative; }
+.m-root .dossier-photo::after, .m-illus::after { content: ''; position: absolute; left: 0; right: 0; height: 2px; top: 0; pointer-events: none;
+  background: rgba(255,255,255,.75); box-shadow: 0 0 14px #fff; animation: scan-top 4.2s linear 1s infinite both; }
+.m-root.light .dossier-photo::after { background: rgba(0,0,0,.55); box-shadow: 0 0 12px rgba(0,0,0,.4); }
+.m-top-pulse { display: block; }
+.m-root.light .m-top-pulse::after { background: linear-gradient(90deg, transparent, #000 70%, transparent); }

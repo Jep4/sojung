@@ -23,7 +23,7 @@ export default function Password() {
       <Txt x={785} y={989} w={349} h={35} size={18} align="center" className={state === 'denied' ? 'shake' : undefined}>
         {message}
       </Txt>
-      <Svg src={asset('password/emblem.svg')} x={830} y={431} w={260} h={218} className={`pw-emblem ${state}`} />
+      <Svg src={asset('password/emblem.svg')} x={830} y={431} w={260} h={218} className={`pw-emblem breathe ${state}`} />
 
       {/* 4-digit code — Figma "Group 10" */}
       <Box x={680} y={807} w={561} h={106} onClick={() => input.current?.focus()} label="접근 코드 입력" className={`pw-slots ${state}`}>

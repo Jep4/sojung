@@ -5,7 +5,7 @@ import { useVisit } from '../lib/session';
 import { Box, cropOf, HLine, Pic, Svg, Txt, VLine } from '../ui/prim';
 import { Header, SysInfo } from '../ui/chrome';
 import { Scramble } from '../fx/Scramble';
-import { OrbitDots } from './MainFx';
+import { OrbitDots, Pulses, RadarAt } from './MainFx';
 
 // Figma "장비 목록 - 상세" (3:855, 4:950, 102:44, 102:6, 102:82, 102:120, 102:175, 102:213, 102:251)
 const SLOTS: Record<number, { thumbY: number; textY: number }[]> = {
@@ -19,6 +19,8 @@ function HudBackdrop() {
   return (
     <>
       <VLine x={1145} y={-41} len={1138} className="draw-y" />
+      <RadarAt x={907} y={302} size={477} />
+      <Pulses lines={[{ x: 1145, y: -41, len: 1138, dir: 'y', dur: 4.2, delay: 1 }, { x: 1145, y: -41, len: 1138, dir: 'y', dur: 4.2, delay: 3.1 }]} />
       <div className="orbit" aria-hidden>
         <Svg src={asset('main/circle-477.svg')} x={907} y={302} w={477} h={477} />
         <Svg src={asset('main/node-14x13.svg')} x={1138} y={295} w={14} h={13} rotate={180} />
@@ -71,8 +73,8 @@ export default function EquipmentDetail() {
       <Box x={1810} y={924} w={36} h={34} onClick={() => go(idx + 1)} label="다음 장비" />
       <Box x={1772} y={924} w={36} h={34} onClick={() => go(idx - 1)} label="이전 장비" />
       <Txt x={1653} y={997} w={227} size={18} lh={1.5} underline to="/equipment">장비 목록으로 돌아가기</Txt>
-      <Svg src={asset('common/crosshair.svg')} x={60} y={595} w={23} h={31} />
-      <Box x={60} y={662} w={340} h={358} bg="#000" border={0.5} className="detail-panel" />
+      <Svg src={asset('common/crosshair.svg')} x={60} y={595} w={23} h={31} className="xhair" />
+      <Box x={60} y={662} w={340} h={358} bg="#000" border={0.5} className="detail-panel scan-box" />
       <Svg key={`il-${active.image}`} src={asset(`illus/${active.image}.svg`)} x={active.illus.x} y={active.illus.y} w={active.illus.w} h={active.illus.h} className="illus-in" />
 
       {op.items.map((it, i) => {

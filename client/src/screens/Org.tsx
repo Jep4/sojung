@@ -3,6 +3,7 @@ import { asset } from '../lib/content';
 import { useVisit } from '../lib/session';
 import { Box, HLine, Pic, Run, Svg, Txt, VLine } from '../ui/prim';
 import { Header, SysInfo } from '../ui/chrome';
+import { Pulses } from './MainFx';
 
 // Figma "조직도" (4:1004)
 const DROPS = [403, 682, 961, 1240, 1519];
@@ -58,7 +59,12 @@ export default function Org() {
           <VLine x={c} y={808} len={58} dir={90} />
         </Fragment>
       ))}
-      <Svg src={asset('org/emblem.svg')} x={892} y={265} w={138} h={116} />
+      <Svg src={asset('org/emblem.svg')} x={892} y={265} w={138} h={116} className="float-soft glow" />
+      <Pulses lines={[
+        { x: 403, y: 425, len: 1116, dir: 'x', dur: 3.6, delay: 0.4 }, { x: 403, y: 425, len: 1116, dir: 'x', dur: 3.6, delay: 2.2 },
+        ...DROPS.map((x, i) => ({ x: x + 1, y: 425, len: 58, dir: 'y' as const, dur: 1.6, delay: 0.6 + i * 0.25 })),
+        ...BRANCHES.map(([hx], i) => ({ x: hx, y: 808, len: 144, dir: 'x' as const, dur: 2.2, delay: 1 + i * 0.3 })),
+      ]} />
     </>
   );
 }

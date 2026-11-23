@@ -27,7 +27,7 @@ export default function Equipment() {
       {equipment.map((op) => {
         const c = CARDS[op.card];
         return (
-          <Box key={op.id} x={c.x} y={305} w={c.w} h={c.h} to={`/equipment/${op.id}`} label={`${op.code} 장비 보기`} className={`equip-card${focus === op.id ? ' focus' : ''}`}>
+          <Box key={op.id} x={c.x} y={305} w={c.w} h={c.h} to={`/equipment/${op.id}`} label={`${op.code} 장비 보기`} className={`equip-card float-card${focus === op.id ? ' focus' : ''}`} style={{ ['--fd' as string]: `${CARDS[op.card].x / 400}s` }}>
             <Pic src={asset(`equip/${op.card}.webp`)} x={0} y={0} w={c.w} h={c.h} border={1} borderColor="#fff" gray className="equip-img" />
             <Pic src={asset(`equip/${op.card}-hover.webp`)} x={0} y={0} w={c.w} h={c.h} border={1} borderColor="#fff" className="equip-img hover" />
           </Box>

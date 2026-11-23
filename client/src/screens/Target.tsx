@@ -4,6 +4,7 @@ import { useVisit } from '../lib/session';
 import { cropOf, HLine, Pic, Txt, VLine } from '../ui/prim';
 import { Header, SysInfo } from '../ui/chrome';
 import { Scramble } from '../fx/Scramble';
+import { Pulses } from './MainFx';
 
 // Figma "페르소나 설명" (5:1097, 102:365, 102:428, 102:302) — light theme
 export default function Target() {
@@ -20,7 +21,8 @@ export default function Target() {
       <VLine color="var(--black)" x={1252} y={932} len={88} dir={90} />
       <VLine color="var(--black)" x={1573} y={932} len={88} dir={90} />
       <Header theme="light" />
-      <Pic src={asset(`target/t${t.id}.webp`)} x={60} y={305} w={833} h={t.photo.h} crop={cropOf(...t.photo.crop)} gray className="dossier-photo" />
+      <Pic src={asset(`target/t${t.id}.webp`)} x={60} y={305} w={833} h={t.photo.h} crop={cropOf(...t.photo.crop)} gray className="dossier-photo photo-scan dark" />
+      <Pulses dark lines={[{ x: 973, y: 428, len: 887, dir: 'x', dur: 3.4, delay: 0.6 }, { x: 973, y: 640, len: 887, dir: 'x', dur: 3.4, delay: 2.2 }]} />
       <SysInfo color={ink} />
       <Txt x={973} y={305} w={663} size={40} lh={1.3} color={ink}><Scramble text={t.no} /></Txt>
       <Txt x={973} y={374} w={662} size={20} lh={1.7} color="var(--gray)">{t.name}</Txt>

@@ -43,7 +43,7 @@ export function MShell({ children, light, percent = '20%', bare, pulse }: { chil
   return (
     <div className={`m-root${light ? ' light' : ''}`}>
       <header className="m-top">
-        {pulse && <span className="m-top-pulse fx-only" aria-hidden />}
+        {(pulse || !bare) && <span className="m-top-pulse fx-only" aria-hidden />}
         {bare
           ? <img className="m-logo" src={asset(light ? 'common/logo-dark.svg' : 'common/logo.svg')} alt="BRACER" />
           : <Link to="/main" aria-label="BRACER — 메인으로"><img className="m-logo" src={asset(light ? 'common/logo-dark.svg' : 'common/logo.svg')} alt="BRACER" /></Link>}

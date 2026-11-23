@@ -67,6 +67,4 @@ a.txt:focus-visible, button.txt:focus-visible, .hit:focus-visible { outline: 1px
 @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 .blink { animation: blink 1.2s steps(1) infinite; }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
-}
+/* Reduced motion: drop the flashing/shaking effects, keep the slow drifts and rotations (see fx.css) */

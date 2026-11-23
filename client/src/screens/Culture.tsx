@@ -5,6 +5,7 @@ import { useVisit } from '../lib/session';
 import { Box, HLine, Pic, Svg, Txt, VLine } from '../ui/prim';
 import { Header, SysInfo } from '../ui/chrome';
 import { Scramble } from '../fx/Scramble';
+import { Dots, Pulses } from './MainFx';
 
 // Figma "조직 문화" (3:595 → 3:668 → 3:733)
 export default function Culture() {
@@ -30,8 +31,8 @@ export default function Culture() {
           : <span key={i} className={r.underline ? 'u' : undefined} style={{ fontWeight: r.weight }}>{r.text}</span>)}
       </Txt>
       <SysInfo />
-      <Svg src={asset('common/crosshair.svg')} x={970} y={254} w={23} h={31} />
-      <Svg src={asset('common/crosshair.svg')} x={1837} y={254} w={23} h={31} />
+      <Svg src={asset('common/crosshair.svg')} x={970} y={254} w={23} h={31} className="xhair" />
+      <Svg src={asset('common/crosshair.svg')} x={1837} y={254} w={23} h={31} className="xhair late" />
       {n > 1 && <>
         <Txt x={60} y={993} size={18} lh={1.5} underline nowrap to="/culture/1">BACK TO FIRST PAGE</Txt>
         <Txt x={515} y={993} size={18} lh={1.5} underline nowrap to={`/culture/${n - 1}`}>PREVIOUS PAGE</Txt>
@@ -39,10 +40,14 @@ export default function Culture() {
       {/* redaction bar over the link line — retracts on hover */}
       <Box x={c.bar.x} y={c.bar.y} w={c.bar.w} h={23} bg="#fff" className={`redact${reveal ? ' open' : ''}`}
         onClick={() => navigate(next)} label="다음 페이지" style={{}} />
-      <Pic src={asset('culture/skeletons.webp')} x={1021} y={254} w={788} h={581} className="scan" />
-      <Svg src={asset('culture/circle-1212.svg')} x={-341} y={-107} w={1212} h={1212} />
+      <Pic src={asset('culture/skeletons.webp')} x={1021} y={254} w={788} h={581} className="scan float-soft" />
+      <div className="orbit-culture" aria-hidden>
+        <Svg src={asset('culture/circle-1212.svg')} x={-341} y={-107} w={1212} h={1212} />
+        <Svg src={asset('culture/node-15x14.svg')} x={865.5} y={491.5} w={15} h={14} rotate={-90} />
+      </div>
       <Svg src={asset('culture/ellipse-dashed.svg')} x={-263} y={-33} w={1053} h={1064} className="spin-rev" />
-      <Svg src={asset('culture/node-15x14.svg')} x={865.5} y={491.5} w={15} h={14} rotate={-90} />
+      <Dots circles={[{ cx: 263.5, cy: 499, r: 528, dur: 18, rev: true }, { cx: 263.5, cy: 499, r: 528, dur: 18, delay: -9, rev: true }, { cx: 265, cy: 499, r: 605.75, dur: 24, delay: -4 }]} />
+      <Pulses lines={[{ x: -195, y: 499, len: 2572, dir: 'x', dur: 5, delay: 1 }, { x: 265, y: -41, len: 1138, dir: 'y', dur: 4.4, delay: 2 }]} />
       <HLine x={-195} y={499} len={2572} />
       <VLine x={265} y={-41} len={1138} />
     </>

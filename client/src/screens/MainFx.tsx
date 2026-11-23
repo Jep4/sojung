@@ -31,6 +31,10 @@ export function OrbitDots() {
     { path: circlePath(1716, 540, 620.75, true), dur: 32, delay: -5 },
     { path: circlePath(1716, 540, 620.75, true), dur: 32, delay: -21 },
     { path: circlePath(1145, 540.5, 207.5, true), dur: 9, delay: 0 },
+    { path: circlePath(1145, 540.5, 207.5, true), dur: 9, delay: -4.5 },
+    { path: circlePath(1145.5, 540.5, 238.25), dur: 7, delay: -2 },
+    { path: circlePath(573, 540, 620.75), dur: 26, delay: -6.5 },
+    { path: circlePath(1716, 540, 620.75, true), dur: 32, delay: -13 },
   ];
   return (
     <div className="fx-only" aria-hidden>
@@ -47,7 +51,6 @@ export function AxisPulses() {
     <div className="fx-only" aria-hidden>
       <div style={abs(-21, 539, 2398, 1, { overflow: 'hidden' })}><span className="fx-pulse-x" /></div>
       <div style={abs(1144, -41, 1, 1138, { overflow: 'hidden' })}><span className="fx-pulse-y" /></div>
-      <div style={abs(348, 75, 669, 1, { overflow: 'hidden' })}><span className="fx-pulse-x short" /></div>
     </div>
   );
 }
@@ -90,6 +93,44 @@ export function LogoVideo({ x, y, size, className = '' }: { x?: number; y?: numb
     <div className={`logo-video emblem-in-video ${className}`} style={style} aria-label="BRACER 엠블럼" role="img">
       <canvas ref={canvas} width={720} height={720} />
       <video ref={video} className="logo-video-src" src={asset('main/logo.mp4')} muted loop playsInline autoPlay={!QA} preload="auto" aria-hidden />
+    </div>
+  );
+}
+
+/* ---------- generic motion layers used across screens ---------- */
+
+/** Glowing points running along circles (cx, cy, r in artboard px). */
+export function Dots({ circles }: { circles: { cx: number; cy: number; r: number; dur: number; delay?: number; rev?: boolean }[] }) {
+  return (
+    <div className="fx-only" aria-hidden>
+      {circles.map((c, i) => (
+        <span key={i} className="fx-dot" style={{ offsetPath: circlePath(c.cx, c.cy, c.r, c.rev), animationDuration: `${c.dur}s`, animationDelay: `${c.delay ?? 0}s` } as CSSProperties} />
+      ))}
+    </div>
+  );
+}
+
+/** Light pulses travelling along straight lines. dir 'x' = horizontal line at y, 'y' = vertical line at x. */
+export function Pulses({ lines, dark }: { lines: { x: number; y: number; len: number; dir: 'x' | 'y'; dur?: number; delay?: number }[]; dark?: boolean }) {
+  return (
+    <div className={`fx-only${dark ? ' fx-dark' : ''}`} aria-hidden>
+      {lines.map((l, i) => (
+        <div key={i} className="fx-track" style={l.dir === 'x' ? abs(l.x, l.y - 1, l.len, 1) : abs(l.x - 1, l.y, 1, l.len)}>
+          <span className={l.dir === 'x' ? 'fx-run-x' : 'fx-run-y'}
+            style={{ animationDuration: `${l.dur ?? 3.6}s`, animationDelay: `${l.delay ?? 0}s`, ['--len' as string]: `${l.len}px` } as CSSProperties} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** Radar sweep + rings inside any circle. */
+export function RadarAt({ x, y, size }: { x: number; y: number; size: number }) {
+  return (
+    <div className="fx-only" aria-hidden>
+      <div className="fx-radar" style={abs(x, y, size, size)} />
+      <div className="fx-ripple" style={abs(x, y, size, size)} />
+      <div className="fx-ripple late" style={abs(x, y, size, size)} />
     </div>
   );
 }

@@ -208,7 +208,6 @@ html.qa.qa-hover .equip-card .equip-img.hover { opacity: 1 !important; }
 
 /* QA / reduced motion: extra layers off so the frame equals Figma */
 html.qa .fx-only { display: none !important; }
-@media (prefers-reduced-motion: reduce) { .fx-only { display: none !important; } }
 
 /* logo video (replaces the still emblem): black → transparent over the HUD */
 .logo-video { display: block; pointer-events: none; mix-blend-mode: screen; }
@@ -223,3 +222,55 @@ html.qa .fx-only { display: none !important; }
 /* equipment illustration panel */
 .illus-in > img { animation: illus-draw 1.1s steps(10) .3s both; }
 @keyframes illus-draw { from { clip-path: inset(0 0 100% 0); opacity: .2; } to { clip-path: inset(0); opacity: 1; } }
+
+
+/* ===== v3: louder motion everywhere (feedback: "전반적으로 화려하게") ===== */
+.orbit { animation-duration: 14s; }
+.spin-slow { animation-duration: 18s; }
+.spin-rev { animation-duration: 26s; }
+.orbit-culture { position: absolute; inset: 0; transform-origin: 265px 499px; animation: spin 30s linear infinite; pointer-events: none; }
+
+/* equipment hero: bigger drift with a slight sway (translate/rotate compose with the Figma rotation) */
+.hero-float { animation: bob2 6.5s ease-in-out infinite; }
+@keyframes bob2 { 0%, 100% { translate: 0 0; rotate: 0deg; } 30% { translate: 6px -22px; rotate: .8deg; } 65% { translate: -5px -30px; rotate: -.6deg; } }
+
+/* soft floating for photos, cards and emblems */
+.float-soft { animation: float-soft 7s ease-in-out infinite; }
+@keyframes float-soft { 0%, 100% { translate: 0 0; } 50% { translate: 0 -12px; } }
+.float-card { animation: float-soft 6s ease-in-out var(--fd, 0s) infinite; }
+.float-card::before { content: ''; position: absolute; left: 0; right: 0; top: -30%; height: 30%; z-index: 2; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,.06) 45%, rgba(255,255,255,.13) 50%, transparent);
+  animation: roll 5s linear var(--fd, 0s) infinite; }
+.float-card { overflow: hidden; }
+.glow > img { animation: glow 3.2s ease-in-out infinite; }
+@keyframes glow { 0%, 100% { filter: drop-shadow(0 0 0 rgba(255,255,255,0)); } 50% { filter: drop-shadow(0 0 14px rgba(255,255,255,.7)); } }
+.breathe > img { animation: glow 3.6s ease-in-out infinite; }
+.breathe { animation: float-soft 6s ease-in-out infinite; }
+
+/* scan bar across photos and the illustration panel */
+.photo-scan::after, .scan-box::after { content: ''; position: absolute; left: 0; right: 0; height: 2px; top: 0; pointer-events: none; z-index: 2;
+  background: rgba(255,255,255,.75); box-shadow: 0 0 14px #fff; animation: scan-top 4.2s linear 1s infinite both; }
+.light .photo-scan::after, .photo-scan.dark::after { background: rgba(0,0,0,.6); box-shadow: 0 0 12px rgba(0,0,0,.5); }
+@keyframes scan-top { 0% { top: 0; opacity: 0; } 8%, 92% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+
+/* pulses along any line */
+.fx-track { position: absolute; overflow: hidden; pointer-events: none; }
+.fx-run-x, .fx-run-y { position: absolute; display: block; left: 0; top: 0; animation-timing-function: linear; animation-iteration-count: infinite; animation-fill-mode: both; }
+.fx-run-x { width: 160px; height: 1px; background: linear-gradient(90deg, transparent, #fff 70%, transparent); animation-name: run-x; }
+.fx-run-y { width: 1px; height: 160px; background: linear-gradient(180deg, transparent, #fff 70%, transparent); animation-name: run-y; }
+.fx-dark .fx-run-x { background: linear-gradient(90deg, transparent, #000 70%, transparent); }
+.fx-dark .fx-run-y { background: linear-gradient(180deg, transparent, #000 70%, transparent); }
+@keyframes run-x { from { transform: translateX(-170px); } to { transform: translateX(calc(var(--len) + 10px)); } }
+@keyframes run-y { from { transform: translateY(-170px); } to { transform: translateY(calc(var(--len) + 10px)); } }
+
+/* brighter travelling points */
+.fx-dot { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; box-shadow: 0 0 8px #fff, 0 0 22px rgba(255,255,255,.75), 0 0 40px rgba(255,255,255,.3); }
+.fx-radar { animation-duration: 4s, 1s; }
+
+/* Reduced motion: no flashes, shakes or glitches; drifts and rotations stay */
+@media (prefers-reduced-motion: reduce) {
+  .screen-in, .sweep, .popup, .m-popup { animation: none !important; }
+  .sweep { display: none; }
+  .cctv > img, .m-cam .m-feed > img { animation: none !important; }
+  .blink, .restricted, .boot, a.txt:hover, button.txt:hover, .shake, .pw-slots .pw-slot, .static-noise > img { animation: none !important; }
+}

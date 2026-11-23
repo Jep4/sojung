@@ -4,6 +4,7 @@ import { asset, useContent } from '../lib/content';
 import { useVisit } from '../lib/session';
 import { Box, cropOf, HLine, Pic, Svg, Txt } from '../ui/prim';
 import { Header, SysInfo } from '../ui/chrome';
+import { Pulses } from './MainFx';
 
 // Figma "페르소나 설명" report frames (102:400, 22:2, 102:463, 102:337) + loose monitoring shots (164:1488–1495)
 export default function Report() {
@@ -32,7 +33,8 @@ export default function Report() {
       <Txt x={59} y={284} w={209} size={20} lh={1.7} color="var(--gray)">{r.labels}</Txt>
       <Txt x={1653} y={997} w={227} size={18} lh={1.5} underline to={`/targets/${t.id}`}>타겟 정보로 돌아가기</Txt>
       <Pic key={shot} src={asset(`report/t${t.id}-${shot + 1}.webp`)} x={1043} y={285} w={817} h={562} border={0.5}
-        crop={s.crop ? cropOf(...s.crop) : undefined} gray={s.gray} className="monitor-shot" />
+        crop={s.crop ? cropOf(...s.crop) : undefined} gray={s.gray} className="monitor-shot cctv" style={{ ['--g' as string]: '5.5s' }} />
+      <Pulses lines={[{ x: 60, y: 597, len: 890, dir: 'x', dur: 3.8, delay: 0.5 }, { x: 1514, y: 911, len: 278, dir: 'x', dur: 2.4, delay: 1.2 }]} />
       <HLine x={1514} y={911} len={278} />
       <Txt x={1425} y={898} w={340} size={20} lh={1.5}>{`${String(shot + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}`}</Txt>
       <Svg src={asset('common/arrow.svg')} x={1850.58} y={901.52} w={9.81} h={17.96} />
