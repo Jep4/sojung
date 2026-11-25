@@ -35,6 +35,10 @@ npm start
 | `/targets/:id/report` | 관찰 보고서 (102:400, 22:2, 102:463, 102:337) + 모니터링 사진 (164:1488~1495) |
 | `/org`, `/org/ethan-vence` | 조직도 (4:1004) · 이든 밴스 클릭 시 (102:765) |
 
+## 배포 (Vercel)
+
+`https://bracer-chi.vercel.app/` — 저장소에 push하면 Vercel이 자동으로 빌드합니다. `vercel.json`이 서버 없는 정적 버전(`build:static` → `client/dist-static/`)을 빌드하도록 지정합니다. Vercel 프로젝트 설정의 Root Directory는 저장소 루트(비워 둠)로 두면 됩니다.
+
 ## 프론트만 웹사이트로 올리기 (GitHub Pages)
 
 서버 없이 동작하는 정적 버전(`npm --prefix client run build:static` → `client/dist-static/`)이 있습니다. 문구는 번들에 포함되고, 접근 코드(0000)와 활동 기록은 브라우저 안에서 처리됩니다. 폰에서는 모바일 레이아웃, 태블릿·PC에서는 데스크톱 레이아웃으로 보입니다.
@@ -61,7 +65,17 @@ ffmpeg -i BRACER_18s.mp4 -vf scale=960:540 -c:v libx264 -crf 33 -pix_fmt yuv420p
 
 ### 사이트 QR 코드
 
-`qr/bracer-site-qr.png`, `qr/bracer-site-qr.svg` → https://jep4.github.io/sojung/
+`qr/bracer-qr-light.(png|svg)`(흰 바탕), `qr/bracer-qr-dark.(png|svg)`(검은 바탕) → https://bracer-chi.vercel.app/
+
+메인 엠블럼 모양을 네모 도트로 그린 QR입니다(오류 정정 H). 다시 만들기:
+
+```bash
+node scripts/render-qr.mjs mask      # 엠블럼 실루엣 마스크
+python3 scripts/make-qr.py [URL]     # SVG 생성 (pip install qrcode pillow)
+node scripts/render-qr.mjs           # PNG 1200px
+```
+
+인쇄할 때는 2cm 이상 크기를 권장합니다. 예전 GitHub Pages용: `qr/bracer-site-qr.png` → https://jep4.github.io/sojung/
 
 ### 에셋 다시 받기
 
