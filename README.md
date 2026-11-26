@@ -37,7 +37,7 @@ npm start
 
 ## 배포 (Vercel)
 
-`https://bracer-chi.vercel.app/` — 저장소에 push하면 Vercel이 자동으로 빌드합니다. `vercel.json`이 서버 없는 정적 버전(`build:static` → `client/dist-static/`)을 빌드하도록 지정합니다. Vercel 프로젝트 설정의 Root Directory는 저장소 루트(비워 둠)로 두면 됩니다.
+`https://bracer-chi.vercel.app/` — 저장소에 push하면 Vercel이 자동으로 빌드합니다. `vercel.json`이 서버 없는 정적 버전(`build:static` → `client/dist-static/`)을 빌드하도록 지정합니다. Root Directory를 저장소 루트로 두면 루트의 `vercel.json`, `client`로 두면 `client/vercel.json`이 쓰입니다(둘 다 같은 정적 빌드).
 
 ## 프론트만 웹사이트로 올리기 (GitHub Pages)
 
