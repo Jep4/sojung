@@ -67,7 +67,7 @@ ffmpeg -i BRACER_18s.mp4 -vf scale=960:540 -c:v libx264 -crf 33 -pix_fmt yuv420p
 
 `qr/bracer-qr-light.(png|svg)`(흰 바탕), `qr/bracer-qr-dark.(png|svg)`(검은 바탕) → https://bracer-chi.vercel.app/
 
-메인 엠블럼 모양을 네모 도트로 그린 QR입니다(오류 정정 H). 다시 만들기:
+가운데에 메인 엠블럼을 네모 픽셀로 넣은 QR입니다(오류 정정 H, 엠블럼이 가린 칸은 오류 정정으로 복구). HUD 모서리 프레임과 픽셀 글꼴 캡션 포함. 다시 만들기:
 
 ```bash
 node scripts/render-qr.mjs mask      # 엠블럼 실루엣 마스크
