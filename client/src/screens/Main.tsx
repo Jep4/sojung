@@ -8,7 +8,7 @@ import { Box, HLine, Pic, Svg, Txt, VLine } from '../ui/prim';
 import { Clock, Header } from '../ui/chrome';
 import { Scramble } from '../fx/Scramble';
 import Popup from './Popup';
-import { AxisPulses, LogoVideo, OrbitDots, Radar, Scanners } from './MainFx';
+import { AxisPulses, LogoVideo, OrbitDots, Radar, Scanners, TargetCycle, TickRing } from './MainFx';
 
 // Figma "메인 화면" (3:764)
 const CAM_LABELS = ['CAM 0127 / 13TH FLOOR OFFICE', 'CAM 0153 / 9TH FLOOR OFFICE', 'CAM 0045 / IN-HOUSE HOSPITAL', 'CAM 1497 / CONTROL ROOM'];
@@ -82,6 +82,7 @@ export default function Main() {
       </div>
       <Svg src={asset('main/circle-1242.svg')} x={-48} y={-81} w={1242} h={1242} />
       <Svg src={asset('main/ellipse-dashed.svg')} x={937.5} y={330.5} w={415} h={420} className="spin-rev" />
+      <TickRing />
       <OrbitDots />
       <AxisPulses />
 
@@ -141,6 +142,7 @@ export default function Main() {
       <Pic src={asset('main/face.webp')} x={1558} y={225} w={293} h={371} crop={{ w: 100.09, h: 105.39, l: -0.04, t: -2.43 }} className="face-scan boot-fade late" />
       <Txt x={1589} y={585} w={231} size={13} align="center"><Scramble text="VERIFY YOUR IDENTITY." delay={800} /></Txt>
 
+      <TargetCycle />
       {popup && <Popup onClose={closePopup} />}
     </>
   );

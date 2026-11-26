@@ -358,3 +358,48 @@ html.qa .fx-only { display: none !important; }
 html.qa .rise, html.qa .draw-h, html.qa .drop-in, html.qa .card-boot, html.qa .org-pop { animation: none !important; }
 html.qa .card-hud, html.qa .restricted-noise { display: none !important; }
 @media (prefers-reduced-motion: reduce) { .rc-box, .trk-box, .tick-new, .rec-dot, .rc-blink { animation: none !important; } }
+
+/* ===== v5 main: target scan cycle (one event at a time) ===== */
+.tc { position: absolute; inset: 0; pointer-events: none; z-index: 6; animation: tc-life var(--T) linear both; }
+@keyframes tc-life { 0%, 74% { opacity: 1; } 82%, 100% { opacity: 0; } }
+.tc > div { position: absolute; }
+.tc-svg { position: absolute; left: 0; top: 0; overflow: visible; filter: drop-shadow(0 0 4px rgba(255,255,255,.8)); }
+.tc-beam { fill: none; stroke: #fff; stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 1; animation: tc-draw .6s cubic-bezier(0, 0, .2, 1) both; }
+.tc-beam.thin { stroke-width: 1; }
+@keyframes tc-draw { to { stroke-dashoffset: 0; } }
+.tc-node { fill: #fff; opacity: 0; animation: tc-node .5s cubic-bezier(0, 0, .2, 1) both; transform-box: fill-box; transform-origin: center; }
+@keyframes tc-node { 0% { opacity: 0; transform: scale(3); } 100% { opacity: 1; transform: none; } }
+
+/* lock brackets on the feed and the identity panel */
+.tc-feed i, .tc-face i { position: absolute; width: 22px; height: 22px; border: 0 solid #fff; }
+.tc-feed .tl, .tc-face .tl { left: -7px; top: -7px; border-width: 2px 0 0 2px; } .tc-feed .tr, .tc-face .tr { right: -7px; top: -7px; border-width: 2px 2px 0 0; }
+.tc-feed .bl, .tc-face .bl { left: -7px; bottom: -7px; border-width: 0 0 2px 2px; } .tc-feed .br, .tc-face .br { right: -7px; bottom: -7px; border-width: 0 2px 2px 0; }
+.tc-feed { animation: tc-lock .6s cubic-bezier(0, 0, .2, 1) both; box-shadow: inset 0 0 0 1px rgba(255,255,255,.0); }
+.tc-face { animation: tc-lock .6s cubic-bezier(0, 0, .2, 1) 2.8s both; }
+@keyframes tc-lock { 0% { opacity: 0; scale: 1.08; } 60% { opacity: 1; } 70% { opacity: .35; } 80%, 100% { opacity: 1; scale: 1; } }
+.tc-chip { position: absolute; left: 8px; top: 8px; padding: 2px 8px; background: #000; font: 600 11px/16px var(--font); letter-spacing: .05em; color: #fff; white-space: nowrap; }
+.tc-chip b, .tc-read b { display: inline-block; width: 6px; height: 6px; margin: 0 7px 1px 0; background: #fff; vertical-align: middle; animation: blink .8s steps(1) infinite; }
+.tc-flash { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: #fff; box-shadow: 0 0 18px 4px rgba(255,255,255,.6); animation: tc-sweep 1.1s cubic-bezier(.4, 0, .2, 1) 3s both; }
+@keyframes tc-sweep { 0% { top: 0; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+
+/* building marker + floor label light up */
+.tc-marker { width: 51px; height: 51px; box-shadow: inset 0 0 0 1px #fff, 0 0 14px rgba(255,255,255,.5); animation: tc-lock .5s cubic-bezier(0, 0, .2, 1) 1.1s both; }
+.tc-label { width: 120px; height: 42px; background: linear-gradient(90deg, rgba(255,255,255,.16), rgba(255,255,255,0)); border-left: 2px solid #fff;
+  animation: tc-label .5s cubic-bezier(0, 0, .2, 1) 1.2s both; }
+@keyframes tc-label { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0); } }
+
+/* sonar ping */
+.tc-ping { width: 480px; height: 480px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.75), 0 0 24px rgba(255,255,255,.25);
+  opacity: 0; animation: tc-ping 1.6s cubic-bezier(0, 0, .2, 1) 2s both; }
+.tc-ping.late { animation-delay: 2.25s; }
+@keyframes tc-ping { 0% { opacity: .9; scale: 1; } 100% { opacity: 0; scale: 2.3; } }
+
+/* identity readout */
+.tc-read { font: 600 11px/16px var(--font); letter-spacing: .05em; color: #fff; white-space: nowrap; animation: tc-label .4s cubic-bezier(0, 0, .2, 1) 2.9s both; }
+
+/* degree ring */
+.tick-ring { position: absolute; inset: 0; pointer-events: none; transform-origin: 1145.5px 540.5px; animation: spin 150s linear infinite reverse, fade-in 1.2s 1s both; }
+.tick-ring svg { position: absolute; left: 0; top: 0; }
+.tick-ring path { stroke: rgba(253,252,251,.32); stroke-width: 1; fill: none; }
+
+@media (prefers-reduced-motion: reduce) { .tc-flash, .tc-chip b, .tc-read b { animation: none !important; } }

@@ -207,3 +207,17 @@ html.m, html.m body { overflow-x: clip; }
 .m-meters .hud-meter { width: auto !important; }
 .m-root .hud-tick { width: 100% !important; margin-top: 14px; }
 .m-root .card-hud { left: 10px; right: 10px; bottom: 8px; font-size: 10px; line-height: 15px; }
+
+/* main: target scan cycle on the phone */
+.m-feed-wrap { position: relative; display: block; }
+.m-tc { position: absolute !important; inset: 0; }
+.m-tc .tc-feed { position: absolute; inset: 0; }
+.m-tc .tc-feed i { width: 16px; height: 16px; }
+.m-tc .tc-feed .tl { left: -5px; top: -5px; } .m-tc .tc-feed .tr { right: -5px; top: -5px; }
+.m-tc .tc-feed .bl { left: -5px; bottom: -5px; } .m-tc .tc-feed .br { right: -5px; bottom: -5px; }
+.m-tc .tc-chip { font-size: 10px; left: 6px; top: 6px; }
+.m-tc-read { position: relative; margin-top: 14px; animation-delay: .5s !important; animation: tc-read-m 9s linear both !important; }
+@keyframes tc-read-m { 0%, 5% { opacity: 0; clip-path: inset(0 100% 0 0); } 10%, 74% { opacity: 1; clip-path: inset(0); } 82%, 100% { opacity: 0; } }
+.m-tc-ping { position: absolute; left: 50%; top: 50%; width: 62%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; pointer-events: none;
+  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.75), 0 0 20px rgba(255,255,255,.25); animation: tc-ping 1.6s cubic-bezier(0, 0, .2, 1) .4s both; }
+.m-tc { --T: 9s; }

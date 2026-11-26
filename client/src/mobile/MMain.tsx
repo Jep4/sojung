@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTransmission } from '../lib/useTransmission';
-import { LogoVideo } from '../screens/MainFx';
+import { LogoVideo, useTargetCycle } from '../screens/MainFx';
+import { Counter } from '../fx/Hud';
 import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../lib/api';
 import { asset, useContent } from '../lib/content';
@@ -55,6 +56,7 @@ export default function MMain() {
   const close = useCallback(() => { setPopup(false); navigate('.', { replace: true, state: null }); }, [navigate]);
   const submit = (e: React.FormEvent) => { e.preventDefault(); if (name.trim()) api.logName(name).then(() => { setSent(true); refresh(); }); };
 
+  const cyc = useTargetCycle();
   return (
     <MShell percent="100%" pulse>
       {/* 11/21 feedback layout: logo → CCTV ×4 → code name → activity log → waveform → replay */}
@@ -64,6 +66,7 @@ export default function MMain() {
         <div className="m-orbit fx-only" aria-hidden><span /></div>
         <div className="m-orbit rev fx-only" aria-hidden><span /></div>
         <div className="m-emblem-float"><LogoVideo className="m-logo-video" /></div>
+        {cyc.n >= 0 && <span key={`p${cyc.n}`} className="m-tc-ping fx-only" aria-hidden />}
       </section>
 
       <section className="m-sec">
@@ -72,11 +75,23 @@ export default function MMain() {
             <Link key={i} to={`/targets/${i + 1}`} className="m-cam" aria-label={`CAM ${i + 1} — TARGET 0${i + 1}`}
               style={{ ['--d' as string]: `${0.3 + i * 0.22}s`, ['--g' as string]: `${6 + i * 1.7}s` }}>
               <span className="m-cam-label"><span><Scramble text={CAM_LABELS[i]} delay={600 + i * 220} /></span><span><i className="m-dot blink" />REC</span></span>
-              <MImg src={asset(`main/cctv${i + 1}.webp`)} ratio={435 / c.h} crop={c.crop} stroke={0.5} className="m-feed" />
+              <span className="m-feed-wrap">
+                <MImg src={asset(`main/cctv${i + 1}.webp`)} ratio={435 / c.h} crop={c.crop} stroke={0.5} className="m-feed" />
+                {cyc.n >= 0 && cyc.i === i && (
+                  <span key={cyc.n} className="tc m-tc fx-only" aria-hidden>
+                    <span className="tc-feed"><i className="tl" /><i className="tr" /><i className="bl" /><i className="br" /><span className="tc-chip"><b />{`LOCK · TARGET 0${i + 1}`}</span></span>
+                  </span>
+                )}
+              </span>
               <Stamp offset={i * 7000} />
             </Link>
           ))}
         </div>
+        {cyc.n >= 0 && (
+          <p key={`r${cyc.n}`} className="tc-read m-tc-read fx-only" aria-hidden>
+            <b />{`TARGET 0${cyc.i + 1} · IDENTITY MATCH `}<Counter to={[97.4, 94.8, 96.1, 98.2][cyc.i]} delay={600} duration={1100} jitter={0} suffix="%" />
+          </p>
+        )}
       </section>
 
       <section className="m-sec">
