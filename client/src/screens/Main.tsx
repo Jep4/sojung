@@ -133,16 +133,18 @@ export default function Main() {
       <Box x={873} y={603} w={4} h={4} bg="#fff" className="pulse-sq" />
       <Box x={873} y={716} w={4} h={4} bg="#fff" className="pulse-sq" />
       <Svg src={asset('main/circle-1242.svg')} x={1095} y={-81} w={1242} h={1242} />
-      {/* 11/21 feedback: the chrome emblem is now the rotating logo video (black keyed out with screen blend) */}
-      <div className="emblem-wrap">
-        <LogoVideo x={901.9} y={296.1} size={484} />
-      </div>
       <Svg src={asset('common/crosshair.svg')} x={884} y={223} w={23} h={31} className="xhair" />
       <Svg src={asset('common/crosshair.svg')} x={884} y={900} w={23} h={31} className="xhair late" />
       <Pic src={asset('main/face.webp')} x={1558} y={225} w={293} h={371} crop={{ w: 100.09, h: 105.39, l: -0.04, t: -2.43 }} className="face-scan boot-fade late" />
       <Txt x={1589} y={585} w={231} size={13} align="center"><Scramble text="VERIFY YOUR IDENTITY." delay={800} /></Txt>
 
       <TargetCycle />
+      {/* the logo sits in front of every line/ring: a soft black halo hides what is behind it, then the
+          screen-blended logo video (11/21 feedback) goes on top */}
+      <div className="emblem-shade" aria-hidden />
+      <div className="emblem-wrap">
+        <LogoVideo x={901.9} y={296.1} size={484} />
+      </div>
       {popup && <Popup onClose={closePopup} />}
     </>
   );

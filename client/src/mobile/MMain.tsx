@@ -65,8 +65,9 @@ export default function MMain() {
         <img className="m-emblem-ring spin-rev" src={asset('main/ellipse-dashed.svg')} alt="" />
         <div className="m-orbit fx-only" aria-hidden><span /></div>
         <div className="m-orbit rev fx-only" aria-hidden><span /></div>
-        <div className="m-emblem-float"><LogoVideo className="m-logo-video" /></div>
         {cyc.n >= 0 && <span key={`p${cyc.n}`} className="m-tc-ping fx-only" aria-hidden />}
+        <span className="m-emblem-shade" aria-hidden />
+        <div className="m-emblem-float"><LogoVideo className="m-logo-video" /></div>
       </section>
 
       <section className="m-sec">

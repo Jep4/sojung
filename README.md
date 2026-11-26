@@ -39,13 +39,11 @@ npm start
 
 `https://bracer-chi.vercel.app/` — 저장소에 push하면 Vercel이 자동으로 빌드합니다. `vercel.json`이 서버 없는 정적 버전(`build:static` → `client/dist-static/`)을 빌드하도록 지정합니다. Root Directory를 저장소 루트로 두면 루트의 `vercel.json`, `client`로 두면 `client/vercel.json`이 쓰입니다(둘 다 같은 정적 빌드).
 
-## 프론트만 웹사이트로 올리기 (GitHub Pages)
+## 서버 없는 정적 버전
 
 서버 없이 동작하는 정적 버전(`npm --prefix client run build:static` → `client/dist-static/`)이 있습니다. 문구는 번들에 포함되고, 접근 코드(0000)와 활동 기록은 브라우저 안에서 처리됩니다. 폰에서는 모바일 레이아웃, 태블릿·PC에서는 데스크톱 레이아웃으로 보입니다. 정적 버전에서는 `?r=/targets/1`처럼 주소에 페이지를 붙여 바로 열 수 있습니다(접근 코드 입력 후).
 
-1. 저장소를 공개로 전환 (Settings → General → Danger Zone → Change visibility)
-2. Settings → Pages → Source를 **GitHub Actions**로 선택
-3. Actions 탭에서 **Deploy to GitHub Pages**를 실행하거나 브랜치에 push → `https://jep4.github.io/sojung/`
+GitHub Pages 자동 배포는 꺼져 있습니다(Vercel만 사용).
 
 ## Figma를 그대로 옮긴 방식
 
@@ -75,7 +73,7 @@ python3 scripts/make-qr.py [URL]     # SVG 생성 (pip install qrcode pillow)
 node scripts/render-qr.mjs           # PNG 1200px
 ```
 
-인쇄할 때는 2cm 이상 크기를 권장합니다. 예전 GitHub Pages용: `qr/bracer-site-qr.png` → https://jep4.github.io/sojung/
+인쇄할 때는 2cm 이상 크기를 권장합니다.
 
 ### 에셋 다시 받기
 
