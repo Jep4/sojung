@@ -4,6 +4,7 @@ import { useVisit } from '../lib/session';
 import { cropOf } from '../ui/prim';
 import { Scramble } from '../fx/Scramble';
 import { MImg, MLine, MShell } from './kit';
+import { Reticle, Tracker } from '../fx/Hud';
 
 export default function MTarget() {
   const { id = '1' } = useParams();
@@ -15,11 +16,16 @@ export default function MTarget() {
   const right = t.valuesR.split('\n');
   return (
     <MShell light>
-      <MImg src={asset(`target/t${t.id}.webp`)} ratio={833 / t.photo.h} crop={cropOf(...t.photo.crop)} gray className="dossier-photo" />
+      <div className="m-hud-row dark fx-only"><span><b className="rc-blink" />{t.no} · IDENTIFIED</span></div>
+      <div className="m-hud">
+        <MImg src={asset(`target/t${t.id}.webp`)} ratio={833 / t.photo.h} crop={cropOf(...t.photo.crop)} gray className="dossier-photo" />
+        <Tracker dark box={52} />
+        <Reticle dark size={14} delay={0.9} />
+      </div>
       <h1 className="m-h1 m-gap"><Scramble text={t.no} /></h1>
       <p className="m-body gray">{t.name}</p>
       <MLine dark />
-      <dl className="m-dl m-body">
+      <dl className="m-dl m-body rise" style={{ ['--d' as string]: '.7s' }}>
         <dt>이름</dt><dd>{left[0]}</dd>
         <dt>나이</dt><dd>{left[1]}</dd>
         <dt>성별</dt><dd>{left[2]}</dd>

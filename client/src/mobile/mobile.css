@@ -189,3 +189,21 @@ html.m, html.m body { overflow-x: clip; }
 .m-root.light .dossier-photo::after { background: rgba(0,0,0,.55); box-shadow: 0 0 12px rgba(0,0,0,.4); }
 .m-top-pulse { display: block; }
 .m-root.light .m-top-pulse::after { background: linear-gradient(90deg, transparent, #000 70%, transparent); }
+
+/* ===== HUD layers on the phone layout ===== */
+.m-hud { position: relative; }
+.m-agent-box { position: relative; }
+.m-hud .rc-box .tl { left: -5px; top: -5px; } .m-hud .rc-box .tr { right: -5px; top: -5px; }
+.m-hud .rc-box .bl { left: -5px; bottom: -5px; } .m-hud .rc-box .br { right: -5px; bottom: -5px; }
+.m-agent-box .rc-box .tl { left: 4px; top: 4px; } .m-agent-box .rc-box .tr { right: 4px; top: 4px; }
+.m-agent-box .rc-box .bl { left: 4px; bottom: 4px; } .m-agent-box .rc-box .br { right: 4px; bottom: 4px; }
+.m-hud .trk-txt { font-size: 9px; line-height: 13px; }
+.m-hud-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 14px 0 8px; font: 600 11px/18px var(--font); letter-spacing: .04em; color: rgba(255,255,255,.7); }
+.m-hud-row.dark { color: #000; }
+.m-hud-row.dark .rc-blink { background: #000; }
+.m-hud-row .rc-blink { background: #fff; }
+.m-hud-row .hud-rec { position: static !important; width: auto !important; }
+.m-meters { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; margin: 16px 0 6px; }
+.m-meters .hud-meter { width: auto !important; }
+.m-root .hud-tick { width: 100% !important; margin-top: 14px; }
+.m-root .card-hud { left: 10px; right: 10px; bottom: 8px; font-size: 10px; line-height: 15px; }

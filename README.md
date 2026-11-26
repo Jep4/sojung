@@ -41,7 +41,7 @@ npm start
 
 ## 프론트만 웹사이트로 올리기 (GitHub Pages)
 
-서버 없이 동작하는 정적 버전(`npm --prefix client run build:static` → `client/dist-static/`)이 있습니다. 문구는 번들에 포함되고, 접근 코드(0000)와 활동 기록은 브라우저 안에서 처리됩니다. 폰에서는 모바일 레이아웃, 태블릿·PC에서는 데스크톱 레이아웃으로 보입니다.
+서버 없이 동작하는 정적 버전(`npm --prefix client run build:static` → `client/dist-static/`)이 있습니다. 문구는 번들에 포함되고, 접근 코드(0000)와 활동 기록은 브라우저 안에서 처리됩니다. 폰에서는 모바일 레이아웃, 태블릿·PC에서는 데스크톱 레이아웃으로 보입니다. 정적 버전에서는 `?r=/targets/1`처럼 주소에 페이지를 붙여 바로 열 수 있습니다(접근 코드 입력 후).
 
 1. 저장소를 공개로 전환 (Settings → General → Danger Zone → Change visibility)
 2. Settings → Pages → Source를 **GitHub Actions**로 선택

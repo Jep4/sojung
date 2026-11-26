@@ -6,6 +6,7 @@ import { Box, cropOf, HLine, Pic, Svg, Txt, VLine } from '../ui/prim';
 import { Header, SysInfo } from '../ui/chrome';
 import { Scramble } from '../fx/Scramble';
 import { OrbitDots, Pulses, RadarAt } from './MainFx';
+import { Bars, Reticle } from '../fx/Hud';
 
 // Figma "장비 목록 - 상세" (3:855, 4:950, 102:44, 102:6, 102:82, 102:120, 102:175, 102:213, 102:251)
 const SLOTS: Record<number, { thumbY: number; textY: number }[]> = {
@@ -66,7 +67,9 @@ export default function EquipmentDetail() {
       <HLine x={1486} y={941} len={278} />
       <SysInfo />
       <Txt x={60} y={305} w={663} size={40} lh={1.3}><Scramble text={op.title} duration={800} /></Txt>
-      <Txt x={60} y={op.descY} w={340} size={20} lh={1.5}>{op.desc}</Txt>
+      <Txt x={60} y={op.descY} w={340} size={20} lh={1.5} className="rise" style={{ ['--d' as string]: '.45s' }}>{op.desc}</Txt>
+      <Bars x={330} y={604} w={70} h={16} n={9} />
+      <Reticle key={`rc-${idx}`} x={1131} y={slots[idx].thumbY} w={301} h={179} size={16} delay={0.25} label={`ITEM ${pad(idx + 1)} · SPEC MATCH`} value={99.1} />
       <Txt x={1397} y={926} w={80} size={20} lh={1.5}>{`${pad(idx + 1)} / ${pad(count)}`}</Txt>
       <Svg src={asset('common/arrow.svg')} x={1822.54} y={931.54} w={10.02} h={17.96} />
       <Svg src={asset('common/arrow.svg')} x={1784.52} y={931.54} w={10.02} h={17.96} flipX />

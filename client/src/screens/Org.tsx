@@ -4,6 +4,18 @@ import { useVisit } from '../lib/session';
 import { Box, HLine, Pic, Run, Svg, Txt, VLine } from '../ui/prim';
 import { Header, SysInfo } from '../ui/chrome';
 import { Pulses } from './MainFx';
+import { Reticle, Ticker } from '../fx/Hud';
+
+const H = '0123456789ABCDEF';
+const hx = (n: number) => Array.from({ length: n }, () => H[Math.floor(Math.random() * 16)]).join('');
+const REGISTRY = [
+  () => `AGT-${hx(3)}  ████████  SEALED`, () => `AGT-${hx(3)}  ██████  LV.${1 + Math.floor(Math.random() * 5)}`,
+  () => `AGT-${hx(3)}  ███████████  [REDACTED]`, () => `AGT-${hx(3)}  ETHAN VENCE  ACTIVE`,
+];
+const LINKS = [
+  () => `NODE ${hx(2)} → ${hx(2)}  ${(Math.random() * 40).toFixed(1)}ms`, () => `UPLINK ${hx(4)}  ENCRYPTED`,
+  () => `HANDSHAKE ${hx(3)}  OK`, () => `CHANNEL ${hx(2)}  ${Math.random() > 0.8 ? 'DENIED' : 'SECURE'}`,
+];
 
 // Figma "조직도" (4:1004)
 const DROPS = [403, 682, 961, 1240, 1519];
@@ -25,12 +37,12 @@ export default function Org() {
   const deny = (i: number) => { setDenied(null); requestAnimationFrame(() => setDenied(i)); setTimeout(() => setDenied((d) => (d === i ? null : d)), 900); };
   return (
     <>
-      <HLine x={403} y={425} len={1116} />
+      <HLine x={403} y={425} len={1116} className="draw-h" style={{ ['--d' as string]: '.35s' }} />
       {DROPS.map((x) => <VLine key={x} x={x} y={425} len={58} dir={90} />)}
       <Header active="org" />
       <SysInfo color="var(--gray)" />
-      {BIG.map((x) => <Box key={x} x={x} y={483} w={190} h={190} bg="#000" border={0.5} />)}
-      {SMALL.slice(0, 1).map((x) => <Box key={x} x={x} y={866} w={49} h={49} bg="#000" border={0.5} />)}
+      {BIG.map((x) => <Box key={x} x={x} y={483} w={190} h={190} bg="#000" border={0.5} className="org-pop" style={{ ['--d' as string]: `${0.45 + (x - 307) / 1116 * 0.6}s` }} />)}
+      {SMALL.slice(0, 1).map((x) => <Box key={x} x={x} y={866} w={49} h={49} bg="#000" border={0.5} className="org-pop" style={{ ['--d' as string]: `${1.1 + (x - 306) / 1300 * 0.8}s` }} />)}
       <Pic src={asset('org/silhouettes.webp')} x={617} y={492} w={120} h={177} crop={{ w: 334.4, h: 226.76, l: -6.01, t: -116.51 }} />
       <Pic src={asset('org/silhouettes.webp')} x={1458} y={489} w={120} h={177} crop={{ w: 334.4, h: 226.76, l: -226.75, t: -118.19 }} />
       <Box x={334} y={492} w={120} h={177} className="stack">
@@ -39,13 +51,17 @@ export default function Org() {
         ))}
       </Box>
       <Pic src={asset('org/silhouettes.webp')} x={1181} y={489} w={118} h={177} crop={{ w: 353.24, h: 235.71, l: -197.46, t: -21.43 }} />
-      {SMALL.slice(1).map((x) => <Box key={x} x={x} y={866} w={49} h={49} bg="#000" border={0.5} />)}
+      {SMALL.slice(1).map((x) => <Box key={x} x={x} y={866} w={49} h={49} bg="#000" border={0.5} className="org-pop" style={{ ['--d' as string]: `${1.1 + (x - 306) / 1300 * 0.8}s` }} />)}
       <Pic src={asset('org/ethan.webp')} x={876} y={492} w={169} h={168} fit="fill" to="/org/ethan-vence" label="Ethan Vence 프로필" className="ethan-card" />
       {/* 11/21: only Ethan's name exists; the others are redacted bars with nothing underneath */}
       <NameTag x={NAMES[0]} />
       <Restricted x={RESTRICTED[0]} denied={denied === 0} />
       {NAMES.slice(1).map((x) => <NameTag key={x} x={x} hidden={x !== 960.5} />)}
       {RESTRICTED.slice(1).map((x, i) => <Restricted key={x} x={x} denied={denied === i + 1} />)}
+      {LOCKED.map((l) => <div key={`n${l.box}`} className="restricted-noise fx-only" style={{ left: l.box, top: 483, width: 190, height: 190 }} aria-hidden />)}
+      <Reticle x={865} y={483} w={190} h={190} size={18} delay={1.3} label="ELITE AGENT · CLEARANCE" value={99.4} />
+      <Ticker x={60} y={483} w={240} rows={10} title="AGENT REGISTRY" templates={REGISTRY} ms={600} />
+      <Ticker x={1620} y={483} w={240} rows={10} title="LINK STATUS" templates={LINKS} ms={480} align="right" />
       {LOCKED.map((l, i) => (
         <Box key={l.box} x={l.box} y={483} w={190} h={190} onClick={() => deny(i)} label="접근 권한 없음"
           className={`locked${denied === i ? ' denied' : ''}`} />

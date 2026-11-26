@@ -8,8 +8,12 @@ import './fx/fx.css';
 import './mobile/mobile.css';
 import App from './App';
 
+// static build: `?r=/targets/1` opens a page directly (still behind the access code)
+const start = new URLSearchParams(window.location.search).get('r');
+const entries = [start && start.startsWith('/') ? start : '/'];
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    {STATIC ? <MemoryRouter><App /></MemoryRouter> : <BrowserRouter><App /></BrowserRouter>}
+    {STATIC ? <MemoryRouter initialEntries={entries}><App /></MemoryRouter> : <BrowserRouter><App /></BrowserRouter>}
   </StrictMode>,
 );
