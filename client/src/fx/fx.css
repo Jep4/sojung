@@ -62,8 +62,8 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 .emblem-float > img { animation: float 6s ease-in-out infinite; }
 @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-.cctv > img { transition: filter .2s; }
-.cctv:hover > img { filter: brightness(1.35) contrast(1.15); animation: jitter .3s steps(3) 1; }
+.cctv > img { transition: filter .08s; }
+.cctv:hover > img { filter: brightness(1.35) contrast(1.15); animation: jitter .15s steps(3) 1; }
 .cctv:hover { outline: 1px solid #fff; outline-offset: 3px; }
 @keyframes jitter { 0% { transform: translateX(0); } 33% { transform: translateX(-4px); } 66% { transform: translateX(3px); } 100% { transform: none; } }
 .target-box { animation: lock 3.2s steps(1) infinite; }
@@ -76,15 +76,15 @@
 .codename-input { position: absolute; background: transparent; border: 0; outline: none; color: transparent; caret-color: #fff; font: 600 13px/1.6 var(--font); letter-spacing: -0.02em; padding: 0; }
 
 /* ===== culture ===== */
-.redact { transform-origin: right center; transition: transform .35s steps(5); }
+.redact { transform-origin: right center; transition: transform .14s steps(4); }
 .redact.open, .redact:hover { transform: scaleX(0); }
-.culture-link:hover { animation: flicker .35s steps(2) 1; }
+.culture-link:hover { animation: flicker .16s steps(2) 1; }
 .scan::after { content: ''; position: absolute; top: 0; bottom: 0; width: 2px; left: 0; background: rgba(255,255,255,.6); box-shadow: 0 0 14px #fff; animation: scan-x 5s linear infinite; }
 @keyframes scan-x { from { transform: translateX(0); } to { transform: translateX(788px); } }
 
 /* ===== equipment ===== */
 .equip-card .equip-img.hover { opacity: 0; }
-.equip-card:hover .equip-img.hover, .equip-card:focus-visible .equip-img.hover { animation: swap-in .45s steps(5) forwards; }
+.equip-card:hover .equip-img.hover, .equip-card:focus-visible .equip-img.hover { animation: swap-in .18s steps(4) forwards; }
 @keyframes swap-in {
   0% { opacity: 0; clip-path: inset(0 0 100% 0); } 20% { opacity: 1; clip-path: inset(0 0 70% 0); transform: translateX(-6px); }
   40% { clip-path: inset(30% 0 30% 0); transform: translateX(5px); } 60% { clip-path: inset(0 0 20% 0); transform: none; }
@@ -92,7 +92,7 @@
 }
 .hero-in > img { animation: hero-in .6s steps(6) both; }
 @keyframes hero-in { 0% { opacity: 0; filter: brightness(3) blur(6px); } 50% { opacity: .7; } 100% { opacity: 1; filter: none; } }
-.thumb, .item-text { transition: left .35s steps(6), color .2s; }
+.thumb, .item-text { transition: left .2s steps(5), color .1s; }
 .thumb:not(.on):hover > img { opacity: .6 !important; }
 button.item-text:not(.on):hover { color: #a0a0a0 !important; }
 
@@ -101,7 +101,7 @@ button.item-text:not(.on):hover { color: #a0a0a0 !important; }
 .dossier-photo > img { animation: develop 1.2s steps(8) both; }
 @keyframes develop { 0% { opacity: 0; filter: grayscale(1) contrast(3) brightness(2); } 100% { opacity: 1; } }
 .restricted { animation: flicker 4s steps(1) infinite; }
-.redact-static:hover { animation: flicker .3s steps(2) 2; }
+.redact-static:hover { animation: flicker .14s steps(2) 2; }
 .ethan-card:hover > img { filter: brightness(1.3); }
 
 .boot { animation: flicker 1s steps(2) infinite; }
@@ -347,7 +347,7 @@ html.qa .fx-only { display: none !important; }
 .card-hud { position: absolute; left: 16px; right: 16px; bottom: 14px; z-index: 3; pointer-events: none; font: 600 11px/18px var(--font); letter-spacing: .04em; color: rgba(255,255,255,.7); white-space: pre; }
 .card-hud .mt-track { margin: 6px 0 4px; }
 .equip-card:hover .card-hud, .equip-card:focus-visible .card-hud { color: #fff; }
-.equip-card:hover .card-hud .mt-track span { animation: meter .6s cubic-bezier(.2,.8,.2,1) both; }
+.equip-card:hover .card-hud .mt-track span { animation: meter .25s cubic-bezier(0,0,.2,1) both; }
 
 /* org: chart builds itself, Ethan is locked on */
 .org-pop { animation: drop-in .5s steps(5) var(--d, .3s) both; }

@@ -41,7 +41,7 @@ npm start
 
 ## 서버 없는 정적 버전
 
-서버 없이 동작하는 정적 버전(`npm --prefix client run build:static` → `client/dist-static/`)이 있습니다. 문구는 번들에 포함되고, 접근 코드(0000)와 활동 기록은 브라우저 안에서 처리됩니다. 폰에서는 모바일 레이아웃, 태블릿·PC에서는 데스크톱 레이아웃으로 보입니다. 정적 버전에서는 `?r=/targets/1`처럼 주소에 페이지를 붙여 바로 열 수 있습니다(접근 코드 입력 후).
+서버 없이 동작하는 정적 버전(`npm --prefix client run build:static` → `client/dist-static/`)이 있습니다. 문구는 번들에 포함되고, 접근 코드(0000)와 활동 기록은 브라우저 안에서 처리됩니다. 폰에서는 모바일 레이아웃, 태블릿·PC에서는 데스크톱 레이아웃으로 보입니다. 주소는 실제 경로(`/equipment`, `/targets/1` …)라서 브라우저 뒤로가기가 됩니다. 정적 호스팅에서는 모든 경로를 `index.html`로 돌려줘야 하며(`vercel.json`의 `rewrites`), 직접 연 주소도 접근 코드 입력 전에는 첫 화면으로 돌아갑니다.
 
 GitHub Pages 자동 배포는 꺼져 있습니다(Vercel만 사용).
 

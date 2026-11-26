@@ -58,7 +58,7 @@ img { display: block; max-width: none; }
 /* ---------- interaction ---------- */
 .hit { cursor: pointer; }
 a.txt, button.txt { cursor: pointer; }
-a.txt:hover, button.txt:hover { animation: flicker .35s steps(2) 1; }
+a.txt:hover, button.txt:hover { animation: flicker .16s steps(2) 1; }
 a.txt:focus-visible, button.txt:focus-visible, .hit:focus-visible { outline: 1px dashed currentColor; outline-offset: 4px; }
 
 @keyframes flicker {
