@@ -34,7 +34,7 @@ export default function Report() {
       <Txt x={59} y={284} w={209} size={20} lh={1.7} color="var(--gray)">{r.labels}</Txt>
       <Txt x={1653} y={997} w={227} size={18} lh={1.5} underline to={`/targets/${t.id}`}>타겟 정보로 돌아가기</Txt>
       <Pic key={shot} src={asset(`report/t${t.id}-${shot + 1}.webp`)} x={1043} y={285} w={817} h={562} border={0.5}
-        crop={s.crop ? cropOf(...s.crop) : undefined} gray={s.gray} className="monitor-shot cctv" style={{ ['--g' as string]: '5.5s' }} />
+        crop={s.crop ? cropOf(...s.crop) : undefined} fit={s.fit} gray={s.gray} className="monitor-shot cctv" style={{ ['--g' as string]: '5.5s' }} />
       <Rec x={1043} y={252} label={`REC  ·  CAM-0${t.id}  ·  FEED ${String(shot + 1).padStart(2, '0')}`} />
       <Bars x={1800} y={254} w={60} h={14} n={8} />
       <Tracker key={`trk-${shot}`} x={1043} y={285} w={817} h={562} box={86} dur={12} delay={0.5} />

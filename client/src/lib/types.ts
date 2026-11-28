@@ -12,7 +12,7 @@ export type Operation = {
   id: string; code: string; card: string; target: number;
   title: string; cardTitle: string; desc: string; descY: number; items: EquipItem[];
 };
-export type Shot = { crop?: CropT; gray?: boolean };
+export type Shot = { fit?: 'cover' | 'contain'; crop?: CropT; gray?: boolean };
 export type Target = {
   id: number; no: string; op: string; name: string; valuesL: string; valuesR: string;
   summary: string; request: string; photo: { h: number; crop: CropT };

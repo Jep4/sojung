@@ -23,7 +23,7 @@ export default function MReport() {
       <div className="m-hud-row fx-only"><Rec label={`REC · CAM-0${t.id}`} /><Bars w={48} h={12} n={7} /></div>
       <div className="m-hud">
         <MImg key={shot} src={asset(`report/t${t.id}-${shot + 1}.webp`)} ratio={817 / 562} crop={s.crop ? cropOf(...s.crop) : undefined}
-          gray={s.gray} stroke={0.5} className="monitor-shot" />
+          fit={s.fit} gray={s.gray} stroke={0.5} className="monitor-shot" />
         <Tracker key={`trk-${shot}`} box={48} dur={12} delay={0.5} />
       </div>
       <div className="m-pager">

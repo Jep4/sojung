@@ -390,7 +390,7 @@
         "note": "자세한 경과는 책상 위 관찰 일지 OP.LINE 에서 확인할 것.",
         "shots": [
           {
-            "gray": true
+            "fit": "contain"
           },
           {},
           {}
