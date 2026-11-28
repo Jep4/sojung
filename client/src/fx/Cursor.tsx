@@ -28,15 +28,15 @@ export function CursorFx() {
       if (!seen) { pos.x = target.x; pos.y = target.y; seen = true; document.documentElement.classList.add('fx-cursor-on'); }
       hover = !!(e.target as Element | null)?.closest?.(CLICKABLE);
       if (tag.current) tag.current.textContent = `${Math.round(e.clientX)},${Math.round(e.clientY)}`;
-      if (tag.current) tag.current.style.transform = `translate(${e.clientX + 3}px, ${e.clientY - 27}px)`;
+      if (tag.current) tag.current.style.transform = `translate(${e.clientX + 20}px, ${e.clientY - 40}px)`;
     };
     const press = () => { down = true; };
     const release = () => { down = false; rot += 90; };
     const leave = () => { document.documentElement.classList.remove('fx-cursor-on'); seen = false; };
 
     const tick = (t: number) => {
-      // spring towards the pointer (anchor: left of the arrow tip, like the reference)
-      const ax = target.x - 19, ay = target.y + 6;
+      // spring towards the pointer: the square centres on the arrow tip
+      const ax = target.x, ay = target.y;
       vel.x = (vel.x + (ax - pos.x) * 0.16) * 0.68;
       vel.y = (vel.y + (ay - pos.y) * 0.16) * 0.68;
       pos.x += vel.x; pos.y += vel.y;
