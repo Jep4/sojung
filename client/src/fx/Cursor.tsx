@@ -36,13 +36,13 @@ export function CursorFx() {
 
     const tick = (t: number) => {
       // spring towards the pointer (anchor: left of the arrow tip, like the reference)
-      const ax = target.x - 28, ay = target.y + 6;
+      const ax = target.x - 19, ay = target.y + 6;
       vel.x = (vel.x + (ax - pos.x) * 0.16) * 0.68;
       vel.y = (vel.y + (ay - pos.y) * 0.16) * 0.68;
       pos.x += vel.x; pos.y += vel.y;
       const speed = Math.min(1, Math.hypot(vel.x, vel.y) / 40);
       const breathe = 1 + Math.sin((t - t0) / 380) * 0.06 * (1 - speed);
-      const want = (down ? 0.62 : hover ? 1.55 : 1) * breathe;
+      const want = (down ? 0.62 : hover ? 1.8 : 1) * breathe;
       scale += (want - scale) * 0.22;
       const ang = Math.atan2(vel.y, vel.x) * 180 / Math.PI;
       const el = box.current;
