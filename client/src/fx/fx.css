@@ -425,3 +425,8 @@ html.fx-cursor-on .cur-layer { opacity: 1; }
 .redact:not(.open):not(:hover), .m-redact:not(.open) { animation: redact-blink 1.1s steps(1) infinite; }
 @keyframes redact-blink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: .28; } }
 html.qa .redact { animation: none !important; }
+/* culture: "Click!" on the redaction bar so visitors know it is interactive */
+.redact::after, .m-redact::after { content: 'Click!'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  color: #000; font: 600 13px/1 var(--font); letter-spacing: .06em; pointer-events: none; }
+.m-redact::after { font-size: 11px; }
+html.qa .redact::after { content: none; }
