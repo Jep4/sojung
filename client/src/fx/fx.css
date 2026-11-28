@@ -408,3 +408,20 @@ html.qa .card-hud, html.qa .restricted-noise { display: none !important; }
 .emblem-shade { position: absolute; left: 845.5px; top: 240.5px; width: 600px; height: 600px; pointer-events: none;
   background: radial-gradient(circle closest-side, #000 0%, #000 52%, rgba(0,0,0,.9) 60%, rgba(0,0,0,.55) 70%, rgba(0,0,0,.18) 84%, rgba(0,0,0,0) 100%);
   animation: fade-in 1s .4s both; }
+
+/* ===== exhibition cursor (mouse only; see fx/Cursor.tsx) ===== */
+html.fx-cursor, html.fx-cursor * { cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2232%22%20viewBox%3D%220%200%2024%2032%22%3E%3Cpath%20d%3D%22M2%202%20L2%2025%20L7.6%2019.6%20L11.4%2028.6%20L15.2%2027%20L11.5%2018.2%20L19%2018.2%20Z%22%20fill%3D%22%23141414%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221.6%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E") 2 2, auto !important; }
+.cur-layer { position: fixed; inset: 0; pointer-events: none; z-index: 10000; mix-blend-mode: difference; opacity: 0; transition: opacity .15s; }
+html.fx-cursor-on .cur-layer { opacity: 1; }
+.cur-box { position: absolute; left: 0; top: 0; width: 46px; height: 46px; will-change: transform; }
+.cur-box span { position: absolute; inset: 0; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.85); rotate: var(--rot, 0deg);
+  transition: rotate .4s cubic-bezier(.2,.8,.2,1), background-color .12s, box-shadow .12s; }
+.cur-box.hover span { box-shadow: inset 0 0 0 1.5px #fff, 0 0 14px rgba(255,255,255,.35); background: rgba(255,255,255,.07); }
+.cur-box.down span { background: rgba(255,255,255,.28); }
+.cur-xy { position: absolute; left: 0; top: 0; padding: 0 5px; background: #e9e9e9; color: #000; white-space: nowrap; will-change: transform;
+  font: 700 12px/17px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: .02em; }
+
+/* culture: the redaction bar blinks so visitors notice there is hidden text under it */
+.redact:not(.open):not(:hover), .m-redact:not(.open) { animation: redact-blink 1.1s steps(1) infinite; }
+@keyframes redact-blink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: .28; } }
+html.qa .redact { animation: none !important; }

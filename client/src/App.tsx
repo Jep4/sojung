@@ -14,6 +14,7 @@ import Report from './screens/Report';
 import Org from './screens/Org';
 import Ethan from './screens/Ethan';
 import { useIsMobile } from './lib/useIsMobile';
+import { CursorFx } from './fx/Cursor';
 import MPassword from './mobile/MPassword';
 import MMain from './mobile/MMain';
 import MCulture from './mobile/MCulture';
@@ -60,7 +61,7 @@ function MobileApp() {
 }
 
 export default function App() {
-  return useIsMobile() ? <MobileApp /> : <DesktopApp />;
+  return <>{useIsMobile() ? <MobileApp /> : <DesktopApp />}<CursorFx /></>;
 }
 
 function DesktopApp() {
